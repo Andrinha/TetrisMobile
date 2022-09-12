@@ -1,0 +1,32 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.Tetris" parent="Theme.MaterialComponents.DayNight">
+        <item name="colorPrimary">@color/color_11</item>
+        <item name="colorPrimaryVariant">@color/color_10</item>
+        <item name="colorOnPrimary">@color/color_12</item>
+        <item name="colorSecondary">@color/color_13</item>
+        <item name="colorSecondaryVariant">@color/color_14</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- <item name="actionBarTheme">@style/ThemeOverlay.Actionbar</item> -->
+    </style>
+
+    <style name="Theme.Tetris.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/color_11</item>
+        <item name="colorPrimaryVariant">@color/color_10</item>
+        <item name="colorOnPrimary">@color/color_12</item>
+        <item name="colorSecondary">@color/color_13</item>
+        <item name="colorSecondaryVariant">@color/color_14</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+    </style>
+
+    <style name="Theme.Tetris.NoActionBar.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.Tetris.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.Tetris.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources>

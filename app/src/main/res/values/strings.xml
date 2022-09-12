@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Tetris</string>
+    <string name="start">Start</string>
+    <string name="statistics">Statistics</string>
+    <string name="settings">Settings</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_edit_game">Game editor</string>
+    <string name="player_name">Player name</string>
+    <string name="preset">Difficulty preset</string>
+    <string name="well_width">Well width</string>
+    <string name="well_height">Well height</string>
+    <string name="game_speed">Game speed</string>
+    <string name="unnamed_player">Unnamed player</string>
+</resources>
