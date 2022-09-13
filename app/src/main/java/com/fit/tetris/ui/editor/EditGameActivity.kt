@@ -10,20 +10,19 @@ import com.fit.tetris.R
 import com.fit.tetris.data.GameData
 import com.fit.tetris.databinding.ActivityEditGameBinding
 import com.fit.tetris.ui.game.GameActivity
-import com.fit.tetris.ui.game.GameViewModel
 
 class EditGameActivity : AppCompatActivity() {
 
     private var _binding: ActivityEditGameBinding? = null
     private val binding get() = _binding!!
 
-    private var _viewModel: GameViewModel? = null
+    private var _viewModel: EditGameViewModel? = null
     private val viewModel get() = _viewModel!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        _viewModel = ViewModelProvider(this)[GameViewModel::class.java]
+        _viewModel = ViewModelProvider(this)[EditGameViewModel::class.java]
         _binding = ActivityEditGameBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
