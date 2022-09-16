@@ -8,7 +8,7 @@ class GameGrid(val width: Int, val height: Int) {
         grid[y][x] = value
     }
 
-    fun isInside(x: Int, y: Int): Boolean {
+    private fun isInside(x: Int, y: Int): Boolean {
         return x in 0 until width && y in 0 until height
     }
 
@@ -16,8 +16,8 @@ class GameGrid(val width: Int, val height: Int) {
         return isInside(x, y) && grid[y][x] == 0
     }
 
-    fun isRowFull(y: Int): Boolean {
-        for (x in 0..width) {
+    private fun isRowFull(y: Int): Boolean {
+        for (x in 0 until width) {
             if (grid[y][x] == 0) {
                 return false
             }
@@ -26,7 +26,7 @@ class GameGrid(val width: Int, val height: Int) {
     }
 
     fun isRowEmpty(y: Int): Boolean {
-        for (x in 0..width) {
+        for (x in 0 until width) {
             if (grid[y][x] != 0) {
                 return false
             }
@@ -35,15 +35,15 @@ class GameGrid(val width: Int, val height: Int) {
     }
 
     fun clearRow(y: Int) {
-        for (x in 0..width) {
+        for (x in 0 until width) {
             grid[y][x] = 0
         }
     }
 
-    fun moveRowDown(y: Int, numRows: Int) {
-        for (x in 0..width) {
-            grid[y + numRows][x] = grid[y][x];
-            grid[y][x] = 0;
+    private fun moveRowDown(y: Int, numRows: Int) {
+        for (x in 0 until width) {
+            grid[y + numRows][x] = grid[y][x]
+            grid[y][x] = 0
         }
     }
 

@@ -1,6 +1,9 @@
 package com.fit.tetris.ui.game
 
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.Gravity
 import android.view.View
 import android.widget.TableLayout
@@ -9,10 +12,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import androidx.lifecycle.ViewModelProvider
 import com.fit.tetris.R
+import com.fit.tetris.data.Block
 import com.fit.tetris.data.GameData
-import com.fit.tetris.data.RandomBlock
 import com.fit.tetris.databinding.ActivityGameBinding
 import java.lang.Integer.min
+import kotlin.math.sqrt
 
 
 class GameActivity : AppCompatActivity() {
@@ -23,6 +27,11 @@ class GameActivity : AppCompatActivity() {
     private var _viewModel: GameViewModel? = null
     private val viewModel get() = _viewModel!!
 
+    private val handler = Handler(Looper.getMainLooper())
+    private lateinit var runnable: Runnable
+    private var delay = 100L
+        set(value) {field = if (value < 18) 18 else value}
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _viewModel = ViewModelProvider(this)[GameViewModel::class.java]
@@ -30,50 +39,56 @@ class GameActivity : AppCompatActivity() {
         setContentView(binding.root)
         viewModel.gameData.value = intent.getSerializableExtra("data") as GameData
         viewModel.createGameGrid()
+        delay = 1000L / viewModel.gameData.value!!.speed
 
         binding.frameWell.post {
-            val height = binding.frameWell.height - 3
-            val width = binding.frameWell.width - 3
+            val height = binding.frameWell.height
+            val width = binding.frameWell.width
             val size = min(height / viewModel.gameData.value!!.height, width / viewModel.gameData.value!!.width)
             createTable(viewModel.gameData.value!!.width, viewModel.gameData.value!!.height, size)
         }
 
-        var xx = 0
-        var yy = 0
-
         binding.buttonDown.setOnClickListener {
-            yy++
-            viewModel.gameGrid.value!![xx, yy] = 1
-            drawGrid(viewModel.gameGrid.value!!)
+            viewModel.moveBlockDown()
+            draw(viewModel.gameGrid.value!!, viewModel.currentBlock.value!!)
+        }
+        binding.buttonBottom.setOnClickListener {
+            viewModel.moveDropBlock()
+            draw(viewModel.gameGrid.value!!, viewModel.currentBlock.value!!)
         }
         binding.buttonLeft.setOnClickListener {
-            xx--
-            viewModel.gameGrid.value!![xx, yy] = 1
-            drawGrid(viewModel.gameGrid.value!!)
+            viewModel.moveBlockLeft()
+            draw(viewModel.gameGrid.value!!, viewModel.currentBlock.value!!)
         }
         binding.buttonRight.setOnClickListener {
-            xx++
-            viewModel.gameGrid.value!![xx, yy] = 1
-            drawGrid(viewModel.gameGrid.value!!)
+            viewModel.moveBlockRight()
+            draw(viewModel.gameGrid.value!!, viewModel.currentBlock.value!!)
         }
-        val array = Array(4) { BooleanArray(4)}
-        var t = 0
-        for (y in 0..3) {
-            for (x in 0..3) {
-                array[y][x] = (x + y) % 2 == 0
-                t++
-            }
+        binding.buttonCW.setOnClickListener {
+            viewModel.rotateBlockCW()
+            draw(viewModel.gameGrid.value!!, viewModel.currentBlock.value!!)
         }
-        val block = RandomBlock(array)
-        block.rotateCCW()
-        block.rotateCW()
+        binding.buttonCWW.setOnClickListener {
+            viewModel.rotateBlockCCW()
+            draw(viewModel.gameGrid.value!!, viewModel.currentBlock.value!!)
+        }
+        viewModel.score.observe(this) {
+            binding.textScoreValue.text = it.toString()
+        }
+        viewModel.linesCleared.observe(this) {
+            //delay = 1000L / (viewModel.gameData.value!!.speed + it)
+            delay = 1000L / (viewModel.gameData.value!!.speed + sqrt(it.toFloat()).toLong())
+            //delay = 1000L / viewModel.gameData.value!!.speed
+            binding.textSpeedValue.text = (1000 / delay).toString()
+            binding.textClearedValue.text = it.toString()
+        }
     }
 
     private fun createTable(width: Int, height: Int, size: Int) {
         val tableLayout = TableLayout(this).apply {
             gravity = Gravity.CENTER
             layoutParams = TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT)
-            setBackgroundResource(R.drawable.table_background)
+            //setBackgroundResource(R.drawable.table_background)
         }
 
         repeat(height) {
@@ -101,10 +116,63 @@ class GameActivity : AppCompatActivity() {
     private fun drawGrid(grid: GameGrid) {
         for (y in 0 until grid.height) {
             for (x in 0 until grid.width) {
-                if (grid[x, y] != 0)
-                    getView(x, y).setBackgroundResource(R.drawable.cell_active_background)
+                if (grid[x, y] != 0) {
+                    //getView(x, y).setBackgroundResource(R.drawable.cell_active_background)
+                    getView(x, y ).setBackgroundColor(grid[x, y])
+                }
+
             }
         }
+    }
+
+    private fun drawBlock(block: Block) {
+        block.tilePositions().forEach {
+            //getView(it.x, it.y).setBackgroundResource(R.drawable.cell_active_background)
+            getView(it.x, it.y).setBackgroundColor(Color.rgb(block.r, block.g, block.b))
+        }
+    }
+
+    private fun drawGhostBlock(block: Block) {
+        val distance = viewModel.blockDropDistance()
+        block.tilePositions().forEach {
+            getView(it.x, it.y + distance ).apply {
+                setBackgroundColor(Color.rgb(block.r / 3, block.g / 3, block.b / 3))
+            }
+
+        }
+    }
+
+    private fun clearScreen(grid: GameGrid) {
+        for (y in 0 until grid.height) {
+            for (x in 0 until grid.width) {
+                getView(x, y).apply {
+                    setBackgroundResource(R.drawable.cell_background)
+                }
+            }
+        }
+    }
+
+    private fun draw(grid: GameGrid, block: Block) {
+        clearScreen(grid)
+        drawGrid(grid)
+        drawGhostBlock(block)
+        drawBlock(block)
+    }
+
+    override fun onResume() {
+
+        handler.postDelayed(Runnable {
+            viewModel.moveBlockDown()
+            draw(viewModel.gameGrid.value!!, viewModel.currentBlock.value!!)
+            handler.postDelayed(runnable, delay)
+        }.also { runnable = it }, delay)
+
+        super.onResume()
+    }
+
+    override fun onPause() {
+        handler.removeCallbacks(runnable)
+        super.onPause()
     }
 
     override fun onDestroy() {

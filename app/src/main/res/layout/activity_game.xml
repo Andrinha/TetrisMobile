@@ -21,10 +21,10 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="20dp">
+            android:padding="14dp">
 
             <Button
-                android:id="@+id/button_anticlockwise"
+                android:id="@+id/button_CWW"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="↶"
@@ -33,7 +33,7 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <Button
-                android:id="@+id/button_clockwise"
+                android:id="@+id/button_CW"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="↷"
@@ -44,25 +44,30 @@
             <Button
                 android:id="@+id/button_left"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="←"
+                android:layout_height="0dp"
+                android:scaleX="-1"
+                android:text="➜"
                 android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/button_bottom"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/button_down" />
 
             <Button
                 android:id="@+id/button_right"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="→"
+                android:layout_height="0dp"
+                android:text="➜"
                 android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/button_bottom"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/button_down" />
 
             <Button
                 android:id="@+id/button_down"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:text="↓"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toTopOf="@id/button_bottom"
@@ -71,8 +76,10 @@
 
             <Button
                 android:id="@+id/button_bottom"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:text="⇊"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -96,45 +103,57 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Score" />
+            android:text="Score"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/textScoreValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="0" />
+            android:text="0"
+            android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/textLevel"
+            android:id="@+id/textCleared"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Level" />
+            android:text="Cleared"
+            android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/textLevelValue"
+            android:id="@+id/textClearedValue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="0" />
+            android:text="0"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/textSpeed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Speed"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/textSpeedValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="0"
+            android:textSize="20sp" />
     </LinearLayout>
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="1dp"
-        android:layout_height="0dp"
-        android:background="@color/color_10"
-        app:layout_constraintBottom_toTopOf="@+id/cardView"
-        app:layout_constraintEnd_toStartOf="@+id/linearLayout"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
         android:id="@+id/frame_well"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toTopOf="@+id/cardView"
-        app:layout_constraintEnd_toStartOf="@+id/view"
+        app:layout_constraintEnd_toStartOf="@+id/linearLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 

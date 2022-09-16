@@ -100,7 +100,7 @@
             android:hint="@string/game_speed"
             android:inputType="number"
             android:singleLine="true"
-            android:text="20" />
+            android:text="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <FrameLayout
