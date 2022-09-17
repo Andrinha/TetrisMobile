@@ -7,9 +7,6 @@ import com.fit.tetris.data.Block
 import com.fit.tetris.data.GameData
 import com.fit.tetris.data.Position
 import kotlin.math.min
-import kotlin.math.round
-import kotlin.math.sqrt
-import kotlin.random.Random
 
 class GameViewModel: ViewModel() {
     var gameGrid: MutableLiveData<GameGrid> = MutableLiveData()
@@ -73,7 +70,7 @@ class GameViewModel: ViewModel() {
         }
         val cleared = gameGrid.value!!.clearFullRows()
         score.value = score.value!! + cleared * cleared * gameGrid.value!!.width *
-                gameData.value!!.speed * gameData.value!!.speed * linesCleared.value!!
+                gameData.value!!.speed * gameData.value!!.speed * (linesCleared.value!! + 1)
 
         linesCleared.value = linesCleared.value!! + cleared
 

@@ -112,7 +112,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="0"
-            android:textSize="20sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/textCleared"
@@ -128,7 +128,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="0"
-            android:textSize="20sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/textSpeed"
@@ -144,7 +144,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="0"
-            android:textSize="20sp" />
+            android:textSize="14sp" />
     </LinearLayout>
 
     <FrameLayout

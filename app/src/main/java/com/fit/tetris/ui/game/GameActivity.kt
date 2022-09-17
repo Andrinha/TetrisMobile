@@ -1,10 +1,15 @@
 package com.fit.tetris.ui.game
 
+import android.content.res.AssetFileDescriptor
+import android.content.res.AssetManager
 import android.graphics.Color
+import android.media.AudioAttributes
+import android.media.SoundPool
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.Gravity
+import android.view.MotionEvent
 import android.view.View
 import android.widget.TableLayout
 import android.widget.TableRow
@@ -12,9 +17,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import androidx.lifecycle.ViewModelProvider
 import com.fit.tetris.R
+import com.fit.tetris.data.Action
 import com.fit.tetris.data.Block
 import com.fit.tetris.data.GameData
 import com.fit.tetris.databinding.ActivityGameBinding
+import java.io.IOException
 import java.lang.Integer.min
 import kotlin.math.sqrt
 
@@ -26,6 +33,13 @@ class GameActivity : AppCompatActivity() {
 
     private var _viewModel: GameViewModel? = null
     private val viewModel get() = _viewModel!!
+
+    private lateinit var soundPool: SoundPool
+    private lateinit var assetManager: AssetManager
+    private var streamID = 0
+    private var soundNormal = 0
+    private var soundFinish = 0
+    private var soundWhistle = 0
 
     private val handler = Handler(Looper.getMainLooper())
     private lateinit var runnable: Runnable
@@ -40,6 +54,7 @@ class GameActivity : AppCompatActivity() {
         viewModel.gameData.value = intent.getSerializableExtra("data") as GameData
         viewModel.createGameGrid()
         delay = 1000L / viewModel.gameData.value!!.speed
+        var oldLines = 0
 
         binding.frameWell.post {
             val height = binding.frameWell.height
@@ -48,39 +63,26 @@ class GameActivity : AppCompatActivity() {
             createTable(viewModel.gameData.value!!.width, viewModel.gameData.value!!.height, size)
         }
 
-        binding.buttonDown.setOnClickListener {
-            viewModel.moveBlockDown()
-            draw(viewModel.gameGrid.value!!, viewModel.currentBlock.value!!)
-        }
-        binding.buttonBottom.setOnClickListener {
-            viewModel.moveDropBlock()
-            draw(viewModel.gameGrid.value!!, viewModel.currentBlock.value!!)
-        }
-        binding.buttonLeft.setOnClickListener {
-            viewModel.moveBlockLeft()
-            draw(viewModel.gameGrid.value!!, viewModel.currentBlock.value!!)
-        }
-        binding.buttonRight.setOnClickListener {
-            viewModel.moveBlockRight()
-            draw(viewModel.gameGrid.value!!, viewModel.currentBlock.value!!)
-        }
-        binding.buttonCW.setOnClickListener {
-            viewModel.rotateBlockCW()
-            draw(viewModel.gameGrid.value!!, viewModel.currentBlock.value!!)
-        }
-        binding.buttonCWW.setOnClickListener {
-            viewModel.rotateBlockCCW()
-            draw(viewModel.gameGrid.value!!, viewModel.currentBlock.value!!)
-        }
+        setButtonTouchListener(binding.buttonDown, Action.DOWN)
+        setButtonTouchListener(binding.buttonBottom, Action.BOTTOM)
+        setButtonTouchListener(binding.buttonLeft, Action.LEFT)
+        setButtonTouchListener(binding.buttonRight, Action.RIGHT)
+        setButtonTouchListener(binding.buttonCW, Action.CW)
+        setButtonTouchListener(binding.buttonCWW, Action.CCW)
+
         viewModel.score.observe(this) {
             binding.textScoreValue.text = it.toString()
         }
         viewModel.linesCleared.observe(this) {
-            //delay = 1000L / (viewModel.gameData.value!!.speed + it)
             delay = 1000L / (viewModel.gameData.value!!.speed + sqrt(it.toFloat()).toLong())
-            //delay = 1000L / viewModel.gameData.value!!.speed
             binding.textSpeedValue.text = (1000 / delay).toString()
             binding.textClearedValue.text = it.toString()
+            when {
+                //it - oldLines > 3 -> playSound(soundWhistle)
+                it - oldLines > 0 -> playSound(soundWhistle)
+                else -> playSound(soundFinish)
+            }
+            oldLines = it
         }
     }
 
@@ -157,6 +159,23 @@ class GameActivity : AppCompatActivity() {
         drawGrid(grid)
         drawGhostBlock(block)
         drawBlock(block)
+        playSound(soundNormal)
+    }
+
+    private fun playSound(sound: Int): Int {
+        if (sound > 0) {
+            streamID = soundPool.play(sound, 1F, 1F, 1, 0, 1F)
+        }
+        return streamID
+    }
+
+    private fun loadSound(fileName: String): Int {
+        val afd: AssetFileDescriptor = try {
+            application?.assets?.openFd(fileName)!!
+        } catch (e: IOException) {
+            return -1
+        }
+        return soundPool.load(afd, 1)
     }
 
     override fun onResume() {
@@ -168,11 +187,47 @@ class GameActivity : AppCompatActivity() {
         }.also { runnable = it }, delay)
 
         super.onResume()
+
+        val attributes = AudioAttributes.Builder()
+            .setUsage(AudioAttributes.USAGE_GAME)
+            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+            .build()
+        soundPool = SoundPool.Builder()
+            .setAudioAttributes(attributes)
+            .setMaxStreams(10)
+            .build()
+        assetManager = assets!!
+
+        soundNormal = loadSound("normal.wav")
+        soundFinish = loadSound("finish.wav")
+        soundWhistle = loadSound("whistle.wav")
     }
+
+    private fun setButtonTouchListener(view: View, action: Action) {
+        view.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    when(action) {
+                        Action.DOWN -> viewModel.moveBlockDown()
+                        Action.BOTTOM -> viewModel.moveDropBlock()
+                        Action.LEFT -> viewModel.moveBlockLeft()
+                        Action.RIGHT -> viewModel.moveBlockRight()
+                        Action.CW -> viewModel.rotateBlockCW()
+                        Action.CCW -> viewModel.rotateBlockCCW()
+                    }
+                    draw(viewModel.gameGrid.value!!, viewModel.currentBlock.value!!)
+                }
+            }
+            v.performClick()
+            false
+        }
+    }
+
 
     override fun onPause() {
         handler.removeCallbacks(runnable)
         super.onPause()
+        soundPool.release()
     }
 
     override fun onDestroy() {
