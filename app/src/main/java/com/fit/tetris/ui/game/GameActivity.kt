@@ -4,6 +4,7 @@ import android.content.res.AssetFileDescriptor
 import android.content.res.AssetManager
 import android.graphics.Color
 import android.media.AudioAttributes
+import android.media.MediaPlayer
 import android.media.SoundPool
 import android.os.Bundle
 import android.os.Handler
@@ -34,6 +35,9 @@ class GameActivity : AppCompatActivity() {
     private var _viewModel: GameViewModel? = null
     private val viewModel get() = _viewModel!!
 
+    private val mediaPlayer: MediaPlayer by lazy {
+        MediaPlayer.create(this, R.raw.anime)
+    }
     private lateinit var soundPool: SoundPool
     private lateinit var assetManager: AssetManager
     private var streamID = 0
@@ -44,7 +48,7 @@ class GameActivity : AppCompatActivity() {
     private val handler = Handler(Looper.getMainLooper())
     private lateinit var runnable: Runnable
     private var delay = 100L
-        set(value) {field = if (value < 18) 18 else value}
+        set(value) {field = if (value < 30) 30 else value}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -201,6 +205,7 @@ class GameActivity : AppCompatActivity() {
         soundNormal = loadSound("normal.wav")
         soundFinish = loadSound("finish.wav")
         soundWhistle = loadSound("whistle.wav")
+        mediaPlayer.start()
     }
 
     private fun setButtonTouchListener(view: View, action: Action) {
@@ -223,11 +228,11 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
-
     override fun onPause() {
         handler.removeCallbacks(runnable)
         super.onPause()
         soundPool.release()
+        mediaPlayer.pause()
     }
 
     override fun onDestroy() {
