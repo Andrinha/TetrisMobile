@@ -15,7 +15,6 @@ import android.view.View
 import android.widget.TableLayout
 import android.widget.TableRow
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.children
 import androidx.core.view.get
 import androidx.lifecycle.ViewModelProvider
 import com.fit.tetris.R
@@ -23,6 +22,7 @@ import com.fit.tetris.data.Action
 import com.fit.tetris.data.Block
 import com.fit.tetris.data.GameData
 import com.fit.tetris.databinding.ActivityGameBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.io.IOException
 import java.lang.Integer.min
 import kotlin.math.sqrt
@@ -82,8 +82,6 @@ class GameActivity : AppCompatActivity() {
         setButtonTouchListener(binding.buttonCW, Action.CW)
         setButtonTouchListener(binding.buttonCWW, Action.CCW)
 
-        setTestTouchListener(binding.buttonCWW2)
-
         viewModel.score.observe(this) {
             binding.textScoreValue.text = it.toString()
         }
@@ -106,6 +104,11 @@ class GameActivity : AppCompatActivity() {
         }
         viewModel.placedBlock.observe(this) {
             drawBlock(it)
+        }
+        viewModel.isGameOver.observe(this) {
+            if (it) {
+                showRetryAlert(getString(R.string.defeat))
+            }
         }
     }
 
@@ -246,32 +249,6 @@ class GameActivity : AppCompatActivity() {
         return soundPool.load(afd, 1)
     }
 
-    override fun onResume() {
-
-        handler.postDelayed(Runnable {
-            viewModel.moveBlockDown()
-            draw(viewModel.gameGrid.value!!, viewModel.currentBlock.value!!)
-            handler.postDelayed(runnable, delay)
-        }.also { runnable = it }, delay)
-
-        super.onResume()
-
-        val attributes = AudioAttributes.Builder()
-            .setUsage(AudioAttributes.USAGE_GAME)
-            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-            .build()
-        soundPool = SoundPool.Builder()
-            .setAudioAttributes(attributes)
-            .setMaxStreams(10)
-            .build()
-        assetManager = assets!!
-
-        soundNormal = loadSound("normal.wav")
-        soundFinish = loadSound("finish.wav")
-        soundWhistle = loadSound("whistle.wav")
-        mediaPlayer.start()
-    }
-
     private fun setButtonTouchListener(view: View, action: Action) {
         view.setOnTouchListener { v, event ->
             when (event.action) {
@@ -292,17 +269,46 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
-    private fun setTestTouchListener(view: View) {
-        view.setOnTouchListener { v, event ->
-            when (event.action) {
-                MotionEvent.ACTION_DOWN -> {
-                    var c = 1
-                    c++
-                }
+    private fun showRetryAlert(title: String) {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(title)
+            .setMessage(resources.getString(R.string.start_again_message))
+            .setCancelable(false)
+            .setNegativeButton(resources.getString(R.string.cancel)) { _, _ ->
+                this.finish()
             }
-            v.performClick()
-            false
-        }
+            .setPositiveButton(resources.getString(R.string.start)) { _, _ ->
+                viewModel.create()
+            }
+            .show()
+    }
+
+    override fun onResume() {
+
+        handler.postDelayed(Runnable {
+            if (!viewModel.isGameOver.value!!) {
+                viewModel.moveBlockDown()
+                draw(viewModel.gameGrid.value!!, viewModel.currentBlock.value!!)
+            }
+            handler.postDelayed(runnable, delay)
+        }.also { runnable = it }, delay)
+
+        super.onResume()
+
+        val attributes = AudioAttributes.Builder()
+            .setUsage(AudioAttributes.USAGE_GAME)
+            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+            .build()
+        soundPool = SoundPool.Builder()
+            .setAudioAttributes(attributes)
+            .setMaxStreams(10)
+            .build()
+        assetManager = assets!!
+
+        soundNormal = loadSound("normal.wav")
+        soundFinish = loadSound("finish.wav")
+        soundWhistle = loadSound("whistle.wav")
+        mediaPlayer.start()
     }
 
     override fun onPause() {

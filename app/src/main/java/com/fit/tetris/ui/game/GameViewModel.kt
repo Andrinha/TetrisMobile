@@ -16,12 +16,11 @@ class GameViewModel: ViewModel() {
     var score: MutableLiveData<Int> = MutableLiveData(0)
     var linesCleared: MutableLiveData<Int> = MutableLiveData(0)
     var placedBlock: MutableLiveData<Block> = MutableLiveData()
+    var isGameOver: MutableLiveData<Boolean> = MutableLiveData(false)
 
     fun createGameGrid() {
         if (gameData.value != null) {
-            gameGrid.value = GameGrid(gameData.value!!.width, gameData.value!!.height)
-            blockQueue.value = BlockQueue()
-            currentBlock.value = blockQueue.value!!.getNext(gameGrid.value!!.width)
+            create()
         }
     }
 
@@ -64,7 +63,6 @@ class GameViewModel: ViewModel() {
     }
 
     private fun placeBlock() {
-        //val r = Random.nextInt()
         placedBlock.value = currentBlock.value
         currentBlock.value!!.tilePositions().forEach {
             gameGrid.value!![it.x, it.y] =
@@ -76,9 +74,8 @@ class GameViewModel: ViewModel() {
 
         linesCleared.value = linesCleared.value!! + cleared
 
-        if (isGameOver()) {
-            for (i in 0 until gameGrid.value!!.height)
-                gameGrid.value!!.clearRow(i)
+        if (isGameOver() && !isGameOver.value!!) {
+            isGameOver.value = true
         } else {
             currentBlock.value = blockQueue.value!!.getNext(gameGrid.value!!.width)
         }
@@ -111,5 +108,14 @@ class GameViewModel: ViewModel() {
     fun moveDropBlock() {
         currentBlock.value!!.move(0, blockDropDistance())
         placeBlock()
+    }
+
+    fun create() {
+        gameGrid.value = GameGrid(gameData.value!!.width, gameData.value!!.height)
+        blockQueue.value = BlockQueue()
+        currentBlock.value = blockQueue.value!!.getNext(gameGrid.value!!.width)
+        score.value = 0
+        linesCleared.value = 0
+        isGameOver.value = false
     }
 }

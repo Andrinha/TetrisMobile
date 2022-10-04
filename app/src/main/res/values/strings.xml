@@ -11,4 +11,7 @@
     <string name="well_height">Well height</string>
     <string name="game_speed">Game speed</string>
     <string name="unnamed_player">Unnamed player</string>
+    <string name="start_again_message">Do you want to start again?</string>
+    <string name="cancel">Cancel</string>
+    <string name="defeat">You lose!</string>
 </resources>
