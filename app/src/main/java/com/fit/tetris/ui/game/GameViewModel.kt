@@ -15,6 +15,7 @@ class GameViewModel: ViewModel() {
     var currentBlock: MutableLiveData<Block> = MutableLiveData()
     var score: MutableLiveData<Int> = MutableLiveData(0)
     var linesCleared: MutableLiveData<Int> = MutableLiveData(0)
+    var placedBlock: MutableLiveData<Block> = MutableLiveData()
 
     fun createGameGrid() {
         if (gameData.value != null) {
@@ -64,6 +65,7 @@ class GameViewModel: ViewModel() {
 
     private fun placeBlock() {
         //val r = Random.nextInt()
+        placedBlock.value = currentBlock.value
         currentBlock.value!!.tilePositions().forEach {
             gameGrid.value!![it.x, it.y] =
                 Color.rgb(currentBlock.value!!.r, currentBlock.value!!.g, currentBlock.value!!.b)

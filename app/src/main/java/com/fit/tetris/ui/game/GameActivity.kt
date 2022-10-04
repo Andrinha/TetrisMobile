@@ -15,6 +15,7 @@ import android.view.View
 import android.widget.TableLayout
 import android.widget.TableRow
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.children
 import androidx.core.view.get
 import androidx.lifecycle.ViewModelProvider
 import com.fit.tetris.R
@@ -48,7 +49,7 @@ class GameActivity : AppCompatActivity() {
     private val handler = Handler(Looper.getMainLooper())
     private lateinit var runnable: Runnable
     private var delay = 100L
-        set(value) {field = if (value < 30) 30 else value}
+        set(value) {field = if (value < 17) 17 else value}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,12 +68,21 @@ class GameActivity : AppCompatActivity() {
             createTable(viewModel.gameData.value!!.width, viewModel.gameData.value!!.height, size)
         }
 
+        binding.frameNext.post {
+            val width = binding.frameNext.width
+            val block = viewModel.blockQueue.value!!.nextBlock
+            createTable(width, block)
+            drawPreview(block)
+        }
+
         setButtonTouchListener(binding.buttonDown, Action.DOWN)
         setButtonTouchListener(binding.buttonBottom, Action.BOTTOM)
         setButtonTouchListener(binding.buttonLeft, Action.LEFT)
         setButtonTouchListener(binding.buttonRight, Action.RIGHT)
         setButtonTouchListener(binding.buttonCW, Action.CW)
         setButtonTouchListener(binding.buttonCWW, Action.CCW)
+
+        setTestTouchListener(binding.buttonCWW2)
 
         viewModel.score.observe(this) {
             binding.textScoreValue.text = it.toString()
@@ -87,6 +97,15 @@ class GameActivity : AppCompatActivity() {
                 else -> playSound(soundFinish)
             }
             oldLines = it
+        }
+        viewModel.currentBlock.observe(this) {
+            val width = binding.frameNext.width
+            val block = viewModel.blockQueue.value!!.nextBlock
+            createTable(width, block)
+            drawPreview(block)
+        }
+        viewModel.placedBlock.observe(this) {
+            drawBlock(it)
         }
     }
 
@@ -104,7 +123,8 @@ class GameActivity : AppCompatActivity() {
             }
             repeat(width) {
                 val cell = View(this).apply {
-                    setBackgroundResource(R.drawable.cell_background)
+                    //setBackgroundResource(R.drawable.cell_background)
+                    setBackgroundColor(Color.BLACK)
                     //layoutParams = TableRow.LayoutParams(ceil(20.toPx).toInt(), ceil(20.toPx).toInt())
                     layoutParams = TableRow.LayoutParams(size, size)
                 }
@@ -115,21 +135,50 @@ class GameActivity : AppCompatActivity() {
         binding.frameWell.addView(tableLayout)
     }
 
+    private fun createTable(width: Int, block: Block) {
+        binding.frameNext.removeAllViews()
+
+        val tableLayout = TableLayout(this).apply {
+            gravity = Gravity.CENTER
+            layoutParams = TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT)
+            //setBackgroundResource(R.drawable.table_background)
+        }
+
+        val size = block.tiles.size
+
+        repeat(size) {
+            val tableRow = TableRow(this).apply {
+                gravity = Gravity.CENTER
+                layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT)
+            }
+            repeat(size) {
+                val cell = View(this).apply {
+                    //setBackgroundResource(R.drawable.cell_background)
+                    setBackgroundColor(Color.BLACK)
+                    //layoutParams = TableRow.LayoutParams(ceil(20.toPx).toInt(), ceil(20.toPx).toInt())
+                    layoutParams = TableRow.LayoutParams(width / size, width / size)
+                }
+                tableRow.addView(cell)
+            }
+            tableLayout.addView(tableRow)
+        }
+        binding.frameNext.addView(tableLayout)
+    }
+
     private fun getView(x: Int, y: Int): View {
         return ((binding.frameWell[0] as TableLayout)[y] as TableRow)[x]
     }
 
-    private fun drawGrid(grid: GameGrid) {
-        for (y in 0 until grid.height) {
-            for (x in 0 until grid.width) {
-                if (grid[x, y] != 0) {
-                    //getView(x, y).setBackgroundResource(R.drawable.cell_active_background)
-                    getView(x, y ).setBackgroundColor(grid[x, y])
-                }
-
-            }
-        }
-    }
+//    private fun drawGrid(grid: GameGrid) {
+//        for (y in 0 until grid.height) {
+//            for (x in 0 until grid.width) {
+//                if (grid[x, y] != 0) {
+//                    //getView(x, y).setBackgroundResource(R.drawable.cell_active_background)
+//                    getView(x, y ).setBackgroundColor(grid[x, y])
+//                }
+//            }
+//        }
+//    }
 
     private fun drawBlock(block: Block) {
         block.tilePositions().forEach {
@@ -151,19 +200,34 @@ class GameActivity : AppCompatActivity() {
     private fun clearScreen(grid: GameGrid) {
         for (y in 0 until grid.height) {
             for (x in 0 until grid.width) {
-                getView(x, y).apply {
-                    setBackgroundResource(R.drawable.cell_background)
-                }
+                if (grid[x, y] == 0)
+                    getView(x, y).apply {
+                        //setBackgroundResource(R.drawable.cell_background)
+                        setBackgroundColor(Color.BLACK)
+                    }
             }
         }
     }
 
     private fun draw(grid: GameGrid, block: Block) {
-        clearScreen(grid)
-        drawGrid(grid)
-        drawGhostBlock(block)
-        drawBlock(block)
-        playSound(soundNormal)
+        if (binding.frameWell.childCount != 0) {
+            clearScreen(grid)
+            //drawGrid(grid)
+            drawGhostBlock(block)
+            drawBlock(block)
+            playSound(soundNormal)
+        }
+    }
+
+    private fun drawPreview(block: Block) {
+        block.tiles.forEachIndexed { y, j ->
+            j.forEachIndexed { x, i ->
+                if (i && binding.frameNext.childCount != 0) {
+                    ((binding.frameNext[0] as TableLayout)[x] as TableRow)[y]
+                        .setBackgroundColor(Color.rgb(block.r, block.g, block.b))
+                }
+            }
+        }
     }
 
     private fun playSound(sound: Int): Int {
@@ -221,6 +285,19 @@ class GameActivity : AppCompatActivity() {
                         Action.CCW -> viewModel.rotateBlockCCW()
                     }
                     draw(viewModel.gameGrid.value!!, viewModel.currentBlock.value!!)
+                }
+            }
+            v.performClick()
+            false
+        }
+    }
+
+    private fun setTestTouchListener(view: View) {
+        view.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    var c = 1
+                    c++
                 }
             }
             v.performClick()

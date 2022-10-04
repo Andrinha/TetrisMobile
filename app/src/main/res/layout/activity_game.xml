@@ -63,6 +63,19 @@
                 app:layout_constraintTop_toTopOf="@+id/button_down" />
 
             <Button
+                android:id="@+id/button_CWW2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:text="↶"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/button_down"
+                app:layout_constraintEnd_toStartOf="@+id/button_CW"
+                app:layout_constraintStart_toEndOf="@+id/button_CWW"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
                 android:id="@+id/button_down"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -145,6 +158,48 @@
             android:gravity="center"
             android:text="0"
             android:textSize="14sp" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:padding="10dp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="#FF000000"
+                        android:padding="10dp">
+
+                        <FrameLayout
+                            android:id="@+id/frameNext"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                        </FrameLayout>
+                    </FrameLayout>
+
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/textNext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Next"
+                    android:textSize="20sp" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
 
     <FrameLayout

@@ -7,6 +7,7 @@ class BlockQueue {
 
     var nextBlock: Block = tetrisBlock()
     private var block: Block = nextBlock
+    private var prevId = 0
 
     private fun randomBlock(size: Int): Block {
         val tiles: Array<BooleanArray> = Array(size) {BooleanArray(size)}
@@ -61,8 +62,12 @@ class BlockQueue {
                     booleanArrayOf(false, true, false)
                 )
             )
+        var id: Int
+        do {
+            id = Random.nextInt(0, tiles.size)
+        } while (id == prevId)
+        prevId = id
 
-        val id = Random.nextInt(0, tiles.size)
         return Block(tiles[id])
     }
 
