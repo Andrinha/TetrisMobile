@@ -29,16 +29,36 @@ class EditGameActivity : AppCompatActivity() {
 
         val items = listOf("Easy", "Normal", "Hard", "Custom")
         val adapter = ArrayAdapter(this, R.layout.list_item, items)
-        (binding.textfieldDifficulty.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+        (binding.textInputDifficulty.editText as? AutoCompleteTextView)?.setAdapter(adapter)
 
         binding.buttonStartGame.setOnClickListener {
-            val intent = Intent(this, GameActivity::class.java)
-            val name = binding.textPlayerName.text.toString()
-            val width = binding.textWidth.text.toString().toInt()
-            val height = binding.textHeight.text.toString().toInt()
-            val speed = binding.textSpeed.text.toString().toInt()
-            intent.putExtra("data", GameData(name, width, height, speed))
-            startActivity(intent)
+            val name = binding.textName.text.toString()
+            val width = binding.textWidth.text.toString()
+            val height = binding.textHeight.text.toString()
+            val speed = binding.textSpeed.text.toString()
+            var success = true
+
+            if (name == "") {
+                binding.textInputName.error = "Enter player name"
+                success = false
+            } else binding.textInputName.error = null
+            if (width == "" || width.toInt() !in 4..25) {
+                binding.textInputWidth.error = "Width must be between 4 and 25"
+                success = false
+            } else binding.textInputWidth.error = null
+            if (height == "" || height.toInt() !in 6..35) {
+                binding.textInputHeight.error = "Height must be between 6 and 35"
+                success = false
+            } else binding.textInputHeight.error = null
+            if (speed == "" || speed.toInt() !in 1..60) {
+                binding.textInputSpeed.error = "Speed must be between 1 and 60"
+                success = false
+            } else binding.textInputSpeed.error = null
+            if (success) {
+                val intent = Intent(this, GameActivity::class.java)
+                intent.putExtra("data", GameData(name, width.toInt(), height.toInt(), speed.toInt()))
+                startActivity(intent)
+            }
         }
     }
 

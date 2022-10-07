@@ -107,7 +107,7 @@ class GameActivity : AppCompatActivity() {
         }
         viewModel.isGameOver.observe(this) {
             if (it) {
-                showRetryAlert(getString(R.string.defeat))
+                showRetryAlert(getString(R.string.defeat), viewModel.score.value!!)
             }
         }
     }
@@ -176,7 +176,6 @@ class GameActivity : AppCompatActivity() {
 //        for (y in 0 until grid.height) {
 //            for (x in 0 until grid.width) {
 //                if (grid[x, y] != 0) {
-//                    //getView(x, y).setBackgroundResource(R.drawable.cell_active_background)
 //                    getView(x, y ).setBackgroundColor(grid[x, y])
 //                }
 //            }
@@ -269,10 +268,10 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
-    private fun showRetryAlert(title: String) {
+    private fun showRetryAlert(title: String, score: Int) {
         MaterialAlertDialogBuilder(this)
             .setTitle(title)
-            .setMessage(resources.getString(R.string.start_again_message))
+            .setMessage("Score: $score\n" + resources.getString(R.string.start_again_message))
             .setCancelable(false)
             .setNegativeButton(resources.getString(R.string.cancel)) { _, _ ->
                 this.finish()

@@ -30,7 +30,8 @@
                 android:text="↶"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toTopOf="@+id/button_left"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                tools:ignore="HardcodedText" />
 
             <Button
                 android:id="@+id/button_CW"
@@ -39,7 +40,8 @@
                 android:text="↷"
                 android:textSize="24sp"
                 app:layout_constraintBottom_toTopOf="@+id/button_right"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:ignore="HardcodedText"/>
 
             <Button
                 android:id="@+id/button_left"
@@ -50,7 +52,8 @@
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="@+id/button_bottom"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/button_down" />
+                app:layout_constraintTop_toTopOf="@+id/button_down"
+                tools:ignore="HardcodedText"/>
 
             <Button
                 android:id="@+id/button_right"
@@ -60,20 +63,8 @@
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="@+id/button_bottom"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/button_down" />
-
-            <Button
-                android:id="@+id/button_CWW2"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
-                android:text="↶"
-                android:textSize="24sp"
-                app:layout_constraintBottom_toTopOf="@+id/button_down"
-                app:layout_constraintEnd_toStartOf="@+id/button_CW"
-                app:layout_constraintStart_toEndOf="@+id/button_CWW"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="@+id/button_down"
+                tools:ignore="HardcodedText"/>
 
             <Button
                 android:id="@+id/button_down"
@@ -85,7 +76,8 @@
                 android:textSize="24sp"
                 app:layout_constraintBottom_toTopOf="@id/button_bottom"
                 app:layout_constraintEnd_toStartOf="@+id/button_right"
-                app:layout_constraintStart_toEndOf="@+id/button_left" />
+                app:layout_constraintStart_toEndOf="@+id/button_left"
+                tools:ignore="HardcodedText"/>
 
             <Button
                 android:id="@+id/button_bottom"
@@ -97,7 +89,8 @@
                 android:textSize="24sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/button_right"
-                app:layout_constraintStart_toEndOf="@+id/button_left" />
+                app:layout_constraintStart_toEndOf="@+id/button_left"
+                tools:ignore="HardcodedText"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
@@ -116,7 +109,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Score"
+            android:text="@string/score"
             android:textSize="20sp" />
 
         <TextView
@@ -132,7 +125,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Cleared"
+            android:text="@string/cleared"
             android:textSize="20sp" />
 
         <TextView
@@ -148,7 +141,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Speed"
+            android:text="@string/speed"
             android:textSize="20sp" />
 
         <TextView

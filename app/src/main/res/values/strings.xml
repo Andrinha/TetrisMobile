@@ -14,4 +14,8 @@
     <string name="start_again_message">Do you want to start again?</string>
     <string name="cancel">Cancel</string>
     <string name="defeat">You lose!</string>
+    <string name="normal">Normal</string>
+    <string name="score">Score</string>
+    <string name="cleared">Cleared</string>
+    <string name="speed">Speed</string>
 </resources>

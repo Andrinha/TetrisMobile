@@ -11,6 +11,7 @@
     android:padding="20dp">
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInput_name"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +19,7 @@
         app:endIconMode="clear_text">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/text_player_name"
+            android:id="@+id/text_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/player_name"
@@ -28,18 +29,19 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textfield_difficulty"
+        android:id="@+id/textInput_difficulty"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp">
 
         <AutoCompleteTextView
+            android:id="@+id/text_difficulty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/preset"
             android:inputType="none"
-            android:text="Normal" />
+            android:text="@string/normal" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -50,6 +52,7 @@
         android:orientation="horizontal">
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInput_width"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -70,6 +73,7 @@
             android:layout_height="0dp" />
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInput_height"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -88,6 +92,7 @@
     </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInput_speed"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
