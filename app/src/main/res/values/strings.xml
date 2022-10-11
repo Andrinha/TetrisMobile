@@ -25,4 +25,7 @@
     <string name="login_fail">Invalid password</string>
     <string name="save">save</string>
     <string name="block_editor">Block editor</string>
+    <string name="shape_name">Shape name</string>
+    <string name="unnamed_shape">Unnamed shape</string>
+    <string name="difficulty">Difficulty</string>
 </resources>

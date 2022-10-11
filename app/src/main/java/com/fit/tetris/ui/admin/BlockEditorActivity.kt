@@ -10,8 +10,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.forEach
 import androidx.core.view.get
 import androidx.lifecycle.ViewModelProvider
+import androidx.room.Room
 import com.fit.tetris.data.Action
+import com.fit.tetris.data.Shape
+import com.fit.tetris.data.ShapeDatabase
 import com.fit.tetris.databinding.ActivityBlockEditorBinding
+import kotlinx.android.synthetic.main.activity_edit_game.view.*
 import java.util.Random
 
 class BlockEditorActivity : AppCompatActivity() {
@@ -39,6 +43,7 @@ class BlockEditorActivity : AppCompatActivity() {
         val color = Color.rgb(a, b, c)
 
         binding.buttonSave.setOnClickListener {
+            insertDataToDatabase()
             this.finish()
         }
         setTableTouchListener(binding.table)
@@ -84,6 +89,30 @@ class BlockEditorActivity : AppCompatActivity() {
         }
     }
 
+    private fun insertDataToDatabase() {
+        val name = binding.textName.text.toString()
+        var tiles = ""
+        repeat(4) { j ->
+            repeat(4) { i ->
+                tiles += (if (viewModel.tiles.value!![i][j]) "1" else "0")
+            }
+        }
+        val record = Shape(
+            0,
+            name,
+            tiles.toInt(2))
+        addShape(record)
+    }
+
+    private fun addShape(shape: Shape){
+        val db = Room.databaseBuilder(
+            applicationContext,
+            ShapeDatabase::class.java, "shape_database"
+        ).allowMainThreadQueries().build()
+
+        val shapeDao = db.shapeDao()
+        shapeDao.addShape(shape)
+    }
 
     override fun onDestroy() {
         super.onDestroy()

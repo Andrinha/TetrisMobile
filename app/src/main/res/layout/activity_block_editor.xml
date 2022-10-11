@@ -21,10 +21,11 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:padding="30dp"
         android:background="@color/black"
+        android:padding="30dp"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -90,5 +91,25 @@
             </TableRow>
         </TableLayout>
     </FrameLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInput_name"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:endIconMode="none"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/text_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/shape_name"
+            android:maxLength="20"
+            android:singleLine="true"
+            android:text="@string/unnamed_shape" />
+    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
