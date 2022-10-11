@@ -18,4 +18,11 @@
     <string name="score">Score</string>
     <string name="cleared">Cleared</string>
     <string name="speed">Speed</string>
+    <string name="login_as_administrator">Login as administrator</string>
+    <string name="ok">OK</string>
+    <string name="login">Login</string>
+    <string name="login_success">Success</string>
+    <string name="login_fail">Invalid password</string>
+    <string name="save">save</string>
+    <string name="block_editor">Block editor</string>
 </resources>

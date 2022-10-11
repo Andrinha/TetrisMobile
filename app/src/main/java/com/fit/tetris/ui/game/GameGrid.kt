@@ -34,7 +34,7 @@ class GameGrid(val width: Int, val height: Int) {
         return true
     }
 
-    fun clearRow(y: Int) {
+    private fun clearRow(y: Int) {
         for (x in 0 until width) {
             grid[y][x] = 0
         }

@@ -2,6 +2,7 @@ package com.fit.tetris.ui.editor
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.appcompat.app.AppCompatActivity
@@ -9,7 +10,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.fit.tetris.R
 import com.fit.tetris.data.GameData
 import com.fit.tetris.databinding.ActivityEditGameBinding
+import com.fit.tetris.ui.admin.AdminActivity
+import com.fit.tetris.ui.admin.BlockEditorActivity
 import com.fit.tetris.ui.game.GameActivity
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textfield.TextInputEditText
 
 class EditGameActivity : AppCompatActivity() {
 
@@ -60,6 +65,44 @@ class EditGameActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
+
+        binding.buttonLogin.setOnClickListener {
+            showAlertWithTextInput()
+        }
+    }
+
+    private fun showMessageAlert(title: String, message: String) {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton(resources.getString(R.string.ok)) { it, _ ->
+                it.dismiss()
+            }
+            .show()
+    }
+
+    private fun showAlertWithTextInput() {
+        val input = TextInputEditText(this)
+        input.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
+
+        MaterialAlertDialogBuilder(this)
+            .setTitle("Enter password")
+            .setView(input)
+            .setCancelable(false)
+            .setPositiveButton("OK") { _, _ ->
+                if (viewModel.password == input.text.toString()) {
+                    val intent = Intent(this, AdminActivity::class.java)
+                    startActivity(intent)
+                }
+                else {
+                    showMessageAlert(resources.getString(R.string.login), resources.getString(R.string.login_fail))
+                }
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.cancel()
+                this.finish()
+            }
+            .show()
     }
 
     override fun onDestroy() {

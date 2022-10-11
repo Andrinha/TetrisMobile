@@ -9,33 +9,7 @@
     android:orientation="vertical"
     app:layout_constraintBottom_toTopOf="@+id/button_start_game"
     android:padding="20dp"
-    tools:context=".ui.editor.EditGameActivity">
-
-    <Button
-        android:id="@+id/button_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginBottom="10dp"
-        android:text="@string/login_as_administrator" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInput_name"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        app:endIconMode="clear_text">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/text_name"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/player_name"
-            android:maxLength="20"
-            android:singleLine="true"
-            android:text="@string/unnamed_player" />
-    </com.google.android.material.textfield.TextInputLayout>
+    tools:context=".ui.admin.AdminActivity">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInput_difficulty"
@@ -100,34 +74,23 @@
 
     </LinearLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInput_speed"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+    <Button
+        android:id="@+id/button_block_editor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/text_speed"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="@string/game_speed"
-            android:inputType="number"
-            android:singleLine="true"
-            android:text="1" />
-    </com.google.android.material.textfield.TextInputLayout>
+        android:text="@string/block_editor" />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <Button
-            android:id="@+id/button_start_game"
+            android:id="@+id/button_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:layout_gravity="bottom"
-            android:text="@string/start"
+            android:text="@string/save"
             android:textSize="24sp" />
     </FrameLayout>
 
