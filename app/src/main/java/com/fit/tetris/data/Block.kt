@@ -9,10 +9,10 @@ class Block(var tiles: Array<BooleanArray>) {
     var b = 0
 
     init {
-        while (r + g + b < 256) {
-            r = kotlin.math.abs(Random().nextInt(256))
-            g = kotlin.math.abs(Random().nextInt(256))
-            b = kotlin.math.abs(Random().nextInt(256))
+        while (r + g + b !in 255 .. 512) {
+            r = Random().nextInt(256)
+            g = Random().nextInt(256)
+            b = Random().nextInt(256)
         }
     }
 

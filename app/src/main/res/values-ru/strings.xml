@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tetris</string>
+    <string name="start">Старт</string>
+    <string name="statistics">Статистика</string>
+    <string name="settings">Настройки</string>
+    <string name="action_settings">Настройки</string>
+    <string name="title_activity_edit_game">Настройка игры</string>
+    <string name="player_name">Имя игрока</string>
+    <string name="preset">Пресет сложности</string>
+    <string name="well_width">Ширина стакана</string>
+    <string name="well_height">Высота стакана</string>
+    <string name="game_speed">Скорость игры</string>
+    <string name="unnamed_player">Безымянный игрок</string>
+    <string name="start_again_message">Хотите начать заново?</string>
+    <string name="cancel">Отмена</string>
+    <string name="defeat">Вы проиграли!</string>
+    <string name="normal">Нормальная</string>
+    <string name="score">Очки</string>
+    <string name="cleared">Линии</string>
+    <string name="speed">Скорость</string>
+    <string name="login_as_administrator">Войти как администратор</string>
+    <string name="ok">ОК</string>
+    <string name="login">Логин</string>
+    <string name="login_success">Успешно</string>
+    <string name="login_fail">Неверный пароль</string>
+    <string name="save">Сохранить</string>
+    <string name="block_editor">Редактор фигур</string>
+    <string name="shape_name">Название фигуры</string>
+    <string name="unnamed_shape">Безымянная</string>
+    <string name="difficulty">Сложность</string>
+    <string name="about">Информация</string>
+</resources>

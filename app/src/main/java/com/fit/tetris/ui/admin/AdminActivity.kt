@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.fit.tetris.adapters.ShapeAdapter
 import com.fit.tetris.databinding.ActivityAdminBinding
 
 class AdminActivity : AppCompatActivity() {

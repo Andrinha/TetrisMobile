@@ -11,6 +11,7 @@ import androidx.core.view.forEach
 import androidx.core.view.get
 import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
+import com.fit.tetris.R
 import com.fit.tetris.data.Action
 import com.fit.tetris.data.Shape
 import com.fit.tetris.data.ShapeDatabase
@@ -35,7 +36,7 @@ class BlockEditorActivity : AppCompatActivity() {
         var a = 0
         var b = 0
         var c = 0
-        while (a + b + c < 256) {
+        while (a + b + c !in 255 .. 512) {
             a = Random().nextInt(256)
             b = Random().nextInt(256)
             c = Random().nextInt(256)
@@ -55,7 +56,7 @@ class BlockEditorActivity : AppCompatActivity() {
                             color
                         } else
                         {
-                            Color.rgb(12, 12, 12)
+                            getColor(R.color.color_12_light)
                         }
                     )
                 }

@@ -139,15 +139,15 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun createTable(width: Int, block: Block) {
-        binding.frameNext.removeAllViews()
+        val size = block.tiles.size
+        val background = getColor(R.color.color_12_light)
 
+        binding.frameNext.removeAllViews()
         val tableLayout = TableLayout(this).apply {
             gravity = Gravity.CENTER
             layoutParams = TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT)
             //setBackgroundResource(R.drawable.table_background)
         }
-
-        val size = block.tiles.size
 
         repeat(size) {
             val tableRow = TableRow(this).apply {
@@ -157,7 +157,7 @@ class GameActivity : AppCompatActivity() {
             repeat(size) {
                 val cell = View(this).apply {
                     //setBackgroundResource(R.drawable.cell_background)
-                    setBackgroundColor(Color.BLACK)
+                    setBackgroundColor(background)
                     //layoutParams = TableRow.LayoutParams(ceil(20.toPx).toInt(), ceil(20.toPx).toInt())
                     layoutParams = TableRow.LayoutParams(width / size, width / size)
                 }
@@ -172,15 +172,15 @@ class GameActivity : AppCompatActivity() {
         return ((binding.frameWell[0] as TableLayout)[y] as TableRow)[x]
     }
 
-//    private fun drawGrid(grid: GameGrid) {
-//        for (y in 0 until grid.height) {
-//            for (x in 0 until grid.width) {
-//                if (grid[x, y] != 0) {
-//                    getView(x, y ).setBackgroundColor(grid[x, y])
-//                }
-//            }
-//        }
-//    }
+    private fun drawGrid(grid: GameGrid) {
+        for (y in 0 until grid.height) {
+            for (x in 0 until grid.width) {
+                if (grid[x, y] != 0) {
+                    getView(x, y ).setBackgroundColor(grid[x, y])
+                }
+            }
+        }
+    }
 
     private fun drawBlock(block: Block) {
         block.tilePositions().forEach {
@@ -195,18 +195,18 @@ class GameActivity : AppCompatActivity() {
             getView(it.x, it.y + distance ).apply {
                 setBackgroundColor(Color.rgb(block.r / 3, block.g / 3, block.b / 3))
             }
-
         }
     }
 
     private fun clearScreen(grid: GameGrid) {
         for (y in 0 until grid.height) {
             for (x in 0 until grid.width) {
-                if (grid[x, y] == 0)
-                    getView(x, y).apply {
-                        //setBackgroundResource(R.drawable.cell_background)
-                        setBackgroundColor(Color.BLACK)
-                    }
+//                if (grid[x, y] == 0)
+//                    getView(x, y).apply {
+//                        //setBackgroundResource(R.drawable.cell_background)
+//                        setBackgroundColor(Color.BLACK)
+//                    }
+                getView(x, y).setBackgroundColor(Color.BLACK)
             }
         }
     }
@@ -214,7 +214,7 @@ class GameActivity : AppCompatActivity() {
     private fun draw(grid: GameGrid, block: Block) {
         if (binding.frameWell.childCount != 0) {
             clearScreen(grid)
-            //drawGrid(grid)
+            drawGrid(grid)
             drawGhostBlock(block)
             drawBlock(block)
             playSound(soundNormal)
@@ -227,6 +227,7 @@ class GameActivity : AppCompatActivity() {
                 if (i && binding.frameNext.childCount != 0) {
                     ((binding.frameNext[0] as TableLayout)[x] as TableRow)[y]
                         .setBackgroundColor(Color.rgb(block.r, block.g, block.b))
+                        //.setBackgroundColor(getColor(R.color.color_10))
                 }
             }
         }

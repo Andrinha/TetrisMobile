@@ -22,10 +22,9 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5"
-        app:srcCompat="@drawable/ic_launcher_foreground"
-        android:contentDescription="@string/app_name" />
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/app_name"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_start"
@@ -41,5 +40,15 @@
         android:id="@+id/button_settings"
         android:text="@string/settings"
         style="@style/button_menu_style" />
+
+    <TextView
+        android:id="@+id/text_about"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6"
+        android:padding="10dp"
+        android:gravity="center_horizontal|top"
+        android:text="@string/about"
+        android:textSize="16sp" />
 
 </LinearLayout>
