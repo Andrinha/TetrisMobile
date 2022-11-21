@@ -1,4 +1,4 @@
-package com.fit.tetris.data
+package com.fit.tetris.data.shape
 
 import androidx.room.Entity
 import androidx.room.Ignore

@@ -1,4 +1,4 @@
-package com.fit.tetris.data
+package com.fit.tetris.data.shape
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

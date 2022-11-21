@@ -17,10 +17,13 @@ import android.widget.TableRow
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import androidx.lifecycle.ViewModelProvider
+import androidx.room.Room
 import com.fit.tetris.R
 import com.fit.tetris.data.Action
 import com.fit.tetris.data.Block
 import com.fit.tetris.data.GameData
+import com.fit.tetris.data.record.Record
+import com.fit.tetris.data.record.RecordDatabase
 import com.fit.tetris.databinding.ActivityGameBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.io.IOException
@@ -49,7 +52,9 @@ class GameActivity : AppCompatActivity() {
     private val handler = Handler(Looper.getMainLooper())
     private lateinit var runnable: Runnable
     private var delay = 100L
-        set(value) {field = if (value < 17) 17 else value}
+        set(value) {
+            field = if (value < 17) 17 else value
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,11 +65,15 @@ class GameActivity : AppCompatActivity() {
         viewModel.createGameGrid()
         delay = 1000L / viewModel.gameData.value!!.speed
         var oldLines = 0
+        mediaPlayer.isLooping = true
 
         binding.frameWell.post {
             val height = binding.frameWell.height
             val width = binding.frameWell.width
-            val size = min(height / viewModel.gameData.value!!.height, width / viewModel.gameData.value!!.width)
+            val size = min(
+                height / viewModel.gameData.value!!.height,
+                width / viewModel.gameData.value!!.width
+            )
             createTable(viewModel.gameData.value!!.width, viewModel.gameData.value!!.height, size)
         }
 
@@ -73,6 +82,10 @@ class GameActivity : AppCompatActivity() {
             val block = viewModel.blockQueue.value!!.nextBlock
             createTable(width, block)
             drawPreview(block)
+        }
+
+        if (viewModel.startTime.value == null) {
+            viewModel.startTime.value = System.currentTimeMillis()
         }
 
         setButtonTouchListener(binding.buttonDown, Action.DOWN)
@@ -115,14 +128,20 @@ class GameActivity : AppCompatActivity() {
     private fun createTable(width: Int, height: Int, size: Int) {
         val tableLayout = TableLayout(this).apply {
             gravity = Gravity.CENTER
-            layoutParams = TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT)
+            layoutParams = TableLayout.LayoutParams(
+                TableLayout.LayoutParams.MATCH_PARENT,
+                TableLayout.LayoutParams.MATCH_PARENT
+            )
             //setBackgroundResource(R.drawable.table_background)
         }
 
         repeat(height) {
             val tableRow = TableRow(this).apply {
                 gravity = Gravity.CENTER
-                layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT)
+                layoutParams = TableRow.LayoutParams(
+                    TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams.WRAP_CONTENT
+                )
             }
             repeat(width) {
                 val cell = View(this).apply {
@@ -145,14 +164,20 @@ class GameActivity : AppCompatActivity() {
         binding.frameNext.removeAllViews()
         val tableLayout = TableLayout(this).apply {
             gravity = Gravity.CENTER
-            layoutParams = TableLayout.LayoutParams(TableLayout.LayoutParams.MATCH_PARENT, TableLayout.LayoutParams.MATCH_PARENT)
+            layoutParams = TableLayout.LayoutParams(
+                TableLayout.LayoutParams.MATCH_PARENT,
+                TableLayout.LayoutParams.MATCH_PARENT
+            )
             //setBackgroundResource(R.drawable.table_background)
         }
 
         repeat(size) {
             val tableRow = TableRow(this).apply {
                 gravity = Gravity.CENTER
-                layoutParams = TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT)
+                layoutParams = TableRow.LayoutParams(
+                    TableRow.LayoutParams.MATCH_PARENT,
+                    TableRow.LayoutParams.WRAP_CONTENT
+                )
             }
             repeat(size) {
                 val cell = View(this).apply {
@@ -176,7 +201,7 @@ class GameActivity : AppCompatActivity() {
         for (y in 0 until grid.height) {
             for (x in 0 until grid.width) {
                 if (grid[x, y] != 0) {
-                    getView(x, y ).setBackgroundColor(grid[x, y])
+                    getView(x, y).setBackgroundColor(grid[x, y])
                 }
             }
         }
@@ -192,7 +217,7 @@ class GameActivity : AppCompatActivity() {
     private fun drawGhostBlock(block: Block) {
         val distance = viewModel.blockDropDistance()
         block.tilePositions().forEach {
-            getView(it.x, it.y + distance ).apply {
+            getView(it.x, it.y + distance).apply {
                 setBackgroundColor(Color.rgb(block.r / 3, block.g / 3, block.b / 3))
             }
         }
@@ -227,7 +252,7 @@ class GameActivity : AppCompatActivity() {
                 if (i && binding.frameNext.childCount != 0) {
                     ((binding.frameNext[0] as TableLayout)[x] as TableRow)[y]
                         .setBackgroundColor(Color.rgb(block.r, block.g, block.b))
-                        //.setBackgroundColor(getColor(R.color.color_10))
+                    //.setBackgroundColor(getColor(R.color.color_10))
                 }
             }
         }
@@ -253,7 +278,7 @@ class GameActivity : AppCompatActivity() {
         view.setOnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    when(action) {
+                    when (action) {
                         Action.DOWN -> viewModel.moveBlockDown()
                         Action.BOTTOM -> viewModel.moveDropBlock()
                         Action.LEFT -> viewModel.moveBlockLeft()
@@ -272,12 +297,14 @@ class GameActivity : AppCompatActivity() {
     private fun showRetryAlert(title: String, score: Int) {
         MaterialAlertDialogBuilder(this)
             .setTitle(title)
-            .setMessage("Score: $score\n" + resources.getString(R.string.start_again_message))
+            .setMessage(resources.getString(R.string.score) + ": $score\n" + resources.getString(R.string.start_again_message))
             .setCancelable(false)
             .setNegativeButton(resources.getString(R.string.cancel)) { _, _ ->
+                insertDataToDatabase()
                 this.finish()
             }
             .setPositiveButton(resources.getString(R.string.start)) { _, _ ->
+                insertDataToDatabase()
                 viewModel.create()
             }
             .show()
@@ -309,6 +336,33 @@ class GameActivity : AppCompatActivity() {
         soundFinish = loadSound("finish.wav")
         soundWhistle = loadSound("whistle.wav")
         mediaPlayer.start()
+    }
+
+    private fun insertDataToDatabase() {
+        val name = viewModel.gameData.value!!.name
+        val time = System.currentTimeMillis() - viewModel.startTime.value!!
+        val score = viewModel.score.value!!
+
+        // Create Record Object
+        val record = Record(
+            0,
+            name,
+            score,
+            time,
+            1)
+        // Add Data to Database
+        addRecord(record)
+    }
+
+    private fun addRecord(record: Record){
+        val db = Room.databaseBuilder(
+            applicationContext,
+            RecordDatabase::class.java, "record_database"
+        ).allowMainThreadQueries().build()
+
+        val recordDao = db.recordDao()
+
+        recordDao.addRecord(record)
     }
 
     override fun onPause() {

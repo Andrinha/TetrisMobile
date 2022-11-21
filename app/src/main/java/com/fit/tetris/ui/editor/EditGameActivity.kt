@@ -31,8 +31,12 @@ class EditGameActivity : AppCompatActivity() {
         _binding = ActivityEditGameBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val easy = getString(R.string.easy)
+        val normal = getString(R.string.normal)
+        val hard = getString(R.string.hard)
+        val custom = getString(R.string.custon)
 
-        val items = listOf("Easy", "Normal", "Hard", "Custom")
+        val items = listOf(easy, normal, hard, custom)
         val adapter = ArrayAdapter(this, R.layout.list_item, items)
         (binding.textInputDifficulty.editText as? AutoCompleteTextView)?.setAdapter(adapter)
 
@@ -43,20 +47,20 @@ class EditGameActivity : AppCompatActivity() {
             val speed = binding.textSpeed.text.toString()
             var success = true
 
-            if (name == "") {
-                binding.textInputName.error = "Enter player name"
+            if (name.isBlank()) {
+                binding.textInputName.error = getString(R.string.enter_player_name)
                 success = false
             } else binding.textInputName.error = null
-            if (width == "" || width.toInt() !in 4..25) {
-                binding.textInputWidth.error = "Width must be between 4 and 25"
+            if (width.isBlank() || width.toInt() !in 8..25) {
+                binding.textInputWidth.error = getString(R.string.width_range)
                 success = false
             } else binding.textInputWidth.error = null
-            if (height == "" || height.toInt() !in 6..35) {
-                binding.textInputHeight.error = "Height must be between 6 and 35"
+            if (height.isBlank() || height.toInt() !in 10..35) {
+                binding.textInputHeight.error = getString(R.string.height_range)
                 success = false
             } else binding.textInputHeight.error = null
-            if (speed == "" || speed.toInt() !in 1..60) {
-                binding.textInputSpeed.error = "Speed must be between 1 and 60"
+            if (speed.isBlank() || speed.toInt() !in 1..60) {
+                binding.textInputSpeed.error = getString(R.string.speed_range)
                 success = false
             } else binding.textInputSpeed.error = null
             if (success) {

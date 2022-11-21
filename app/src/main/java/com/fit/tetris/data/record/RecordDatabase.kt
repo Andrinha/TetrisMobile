@@ -1,28 +1,28 @@
-package com.fit.tetris.data
+package com.fit.tetris.data.record
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [Shape::class], version = 1, exportSchema = false)
-abstract class ShapeDatabase: RoomDatabase() {
+@Database(entities = [Record::class], version = 1, exportSchema = false)
+abstract class RecordDatabase: RoomDatabase() {
 
-    abstract fun shapeDao(): ShapeDao
+    abstract fun recordDao(): RecordDao
 
     companion object {
         @Volatile
-        private var INSTANCE: ShapeDatabase? = null
+        private var INSTANCE: RecordDatabase? = null
 
-        fun getDatabase(context: Context): ShapeDatabase {
+        fun getDatabase(context: Context): RecordDatabase {
             val tempInstance = INSTANCE
             if(tempInstance != null)
                 return tempInstance
             synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    ShapeDatabase::class.java,
-                    "shape_database"
+                    RecordDatabase::class.java,
+                    "record_database"
                 ).build()
                 INSTANCE = instance
                 return instance

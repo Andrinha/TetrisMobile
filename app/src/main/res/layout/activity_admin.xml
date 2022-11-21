@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/color_12"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_12"
     android:orientation="vertical"
     app:layout_constraintBottom_toTopOf="@+id/button_start_game"
     tools:context=".ui.admin.AdminActivity">
@@ -79,18 +78,21 @@
         android:id="@+id/recycler_shapes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:clipToPadding="false"
         android:orientation="horizontal"
         android:paddingStart="20dp"
         android:paddingEnd="15dp"
-        android:clipToPadding="false"
         tools:itemCount="1"
-        tools:listitem="@layout/shape_item"/>
+        tools:listitem="@layout/shape_item" />
 
     <Button
         android:id="@+id/button_block_editor"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_gravity="end"
+        android:padding="10dp"
+        android:textSize="20sp"
+        android:layout_margin="16dp"
         android:text="@string/block_editor" />
 
     <FrameLayout
@@ -101,10 +103,10 @@
             android:id="@+id/button_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
             android:layout_gravity="bottom"
-            android:text="@string/save"
             android:layout_margin="20dp"
+            android:padding="10dp"
+            android:text="@string/save"
             android:textSize="24sp" />
     </FrameLayout>
 

@@ -9,7 +9,7 @@ import android.widget.TableRow
 import androidx.core.view.get
 import androidx.recyclerview.widget.RecyclerView
 import com.fit.tetris.R
-import com.fit.tetris.data.Shape
+import com.fit.tetris.data.shape.Shape
 import com.fit.tetris.databinding.ShapeItemBinding
 import java.util.*
 

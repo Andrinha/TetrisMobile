@@ -1,7 +1,7 @@
 package com.fit.tetris.repository
 
-import com.fit.tetris.data.Shape
-import com.fit.tetris.data.ShapeDao
+import com.fit.tetris.data.shape.Shape
+import com.fit.tetris.data.shape.ShapeDao
 
 class ShapeRepository(private val shapeDao: ShapeDao) {
     val readAllData = shapeDao.readAllData()

@@ -30,4 +30,13 @@
     <string name="unnamed_shape">Безымянная</string>
     <string name="difficulty">Сложность</string>
     <string name="about">Информация</string>
+    <string name="title_activity_about">Информация</string>
+    <string name="next">Следующая</string>
+    <string name="easy">Легкая</string>
+    <string name="hard">Сложная</string>
+    <string name="custon">Своя</string>
+    <string name="width_range">Ширина должна быть между 8 и 25</string>
+    <string name="enter_player_name">Введите имя игрока</string>
+    <string name="height_range">Высота должна быть между 10 и 35</string>
+    <string name="speed_range">Скорость должна быть между 1 и 60</string>
 </resources>

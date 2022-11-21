@@ -12,11 +12,9 @@ import androidx.core.view.get
 import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 import com.fit.tetris.R
-import com.fit.tetris.data.Action
-import com.fit.tetris.data.Shape
-import com.fit.tetris.data.ShapeDatabase
+import com.fit.tetris.data.shape.Shape
+import com.fit.tetris.data.shape.ShapeDatabase
 import com.fit.tetris.databinding.ActivityBlockEditorBinding
-import kotlinx.android.synthetic.main.activity_edit_game.view.*
 import java.util.Random
 
 class BlockEditorActivity : AppCompatActivity() {

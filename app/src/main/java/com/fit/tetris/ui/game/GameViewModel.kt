@@ -18,6 +18,9 @@ class GameViewModel: ViewModel() {
     var placedBlock: MutableLiveData<Block> = MutableLiveData()
     var isGameOver: MutableLiveData<Boolean> = MutableLiveData(false)
 
+    var startTime = MutableLiveData<Long>()
+    var isRunning = false
+
     fun createGameGrid() {
         if (gameData.value != null) {
             create()
@@ -117,5 +120,6 @@ class GameViewModel: ViewModel() {
         score.value = 0
         linesCleared.value = 0
         isGameOver.value = false
+        isRunning = false
     }
 }
