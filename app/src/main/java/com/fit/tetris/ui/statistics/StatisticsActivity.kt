@@ -2,12 +2,15 @@ package com.fit.tetris.ui.statistics
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.viewpager.widget.ViewPager
+import androidx.fragment.app.FragmentManager
+import androidx.viewpager2.widget.ViewPager2
+import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
+import com.fit.tetris.R
+import com.fit.tetris.adapters.ViewStateAdapter
 import com.fit.tetris.databinding.ActivityStatisticsBinding
-import com.fit.tetris.ui.statistics.ui.main.SectionsPagerAdapter
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
+
 
 class StatisticsActivity : AppCompatActivity() {
 
@@ -19,16 +22,28 @@ class StatisticsActivity : AppCompatActivity() {
         binding = ActivityStatisticsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val sectionsPagerAdapter = SectionsPagerAdapter(this, supportFragmentManager)
-        val viewPager: ViewPager = binding.viewPager
-        viewPager.adapter = sectionsPagerAdapter
-        val tabs: TabLayout = binding.tabs
-        tabs.setupWithViewPager(viewPager)
-        val fab: FloatingActionButton = binding.fab
+        val fm: FragmentManager = supportFragmentManager
+        val sa = ViewStateAdapter(fm, lifecycle)
+        val pa = findViewById<ViewPager2>(R.id.pager)
+        pa.adapter = sa
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
+        val tabLayout = findViewById<TabLayout>(R.id.tabLayout)
+        tabLayout.addTab(tabLayout.newTab().setText("Bar"))
+        tabLayout.addTab(tabLayout.newTab().setText("Foo"))
+
+        binding.tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+                pa.currentItem = tab.position
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) {}
+        })
+
+        pa.registerOnPageChangeCallback(object : OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                tabLayout.selectTab(tabLayout.getTabAt(position))
+            }
+        })
     }
 }
