@@ -39,4 +39,12 @@
     <string name="enter_player_name">Введите имя игрока</string>
     <string name="height_range">Высота должна быть между 10 и 35</string>
     <string name="speed_range">Скорость должна быть между 1 и 60</string>
+    <string name="developers">О разработчиках</string>
+    <string name="stroke_summary_on">Показывать сетку</string>
+    <string name="stroke_summary_off">Не показывать сетку</string>
+    <string name="stroke_title">Сетка</string>
+    <string name="visuals_header">Внешний вид</string>
+    <string name="sounds_header">Звуки</string>
+    <string name="music_volume">Громкость музыки</string>
+    <string name="sounds_volume">Громкость звуков</string>
 </resources>

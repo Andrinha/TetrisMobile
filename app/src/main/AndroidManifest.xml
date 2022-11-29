@@ -24,8 +24,7 @@
         <activity
             android:name=".ui.statistics.StatisticsActivity"
             android:exported="false"
-            android:label="@string/title_activity_statistics"
-            android:theme="@style/Theme.Tetris.NoActionBar.NoActionBar" >
+            android:label="@string/title_activity_statistics" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -34,8 +33,7 @@
             android:name=".ui.about.AboutActivity"
             android:exported="false"
             android:label="@string/title_activity_about"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.Tetris.NoActionBar.NoActionBar" >
+            android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -61,8 +59,7 @@
             android:name=".ui.editor.EditGameActivity"
             android:exported="false"
             android:label="@string/title_activity_edit_game"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/Theme.Tetris" />
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true" >

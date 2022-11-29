@@ -11,8 +11,9 @@
     android:padding="20dp"
     tools:context=".ui.editor.EditGameActivity">
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_login"
+        style="@style/button_primary_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
@@ -121,11 +122,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/button_start_game"
+            style="@style/button_primary_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
             android:layout_gravity="bottom"
             android:text="@string/start"
             android:textSize="24sp" />

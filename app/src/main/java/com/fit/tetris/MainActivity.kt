@@ -40,6 +40,11 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(this@MainActivity, AboutActivity::class.java)
                 startActivity(intent)
             }
+            textDevs.paintFlags = textAbout.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+            textDevs.setOnClickListener {
+                val intent = Intent(this@MainActivity, AboutActivity::class.java)
+                startActivity(intent)
+            }
         }
 
         Glide.with(this)

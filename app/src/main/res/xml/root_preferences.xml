@@ -1,34 +1,31 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory app:title="@string/messages_header">
+    <PreferenceCategory app:title="@string/sounds_header">
 
-        <EditTextPreference
-            app:key="signature"
-            app:title="@string/signature_title"
-            app:useSimpleSummaryProvider="true" />
+        <SeekBarPreference
+            app:title="@string/music_volume"
+            android:max="100"
+            app:min="0"
+            app:defaultValue="100"
+            app:icon="@drawable/ic_round_volume_up_24" />
 
-        <ListPreference
-            app:defaultValue="reply"
-            app:entries="@array/reply_entries"
-            app:entryValues="@array/reply_values"
-            app:key="reply"
-            app:title="@string/reply_title"
-            app:useSimpleSummaryProvider="true" />
+        <SeekBarPreference
+            app:title="@string/sounds_volume"
+            android:max="100"
+            app:min="0"
+            app:defaultValue="100"
+            app:icon="@drawable/ic_round_volume_up_24" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/sync_header">
+    <PreferenceCategory app:title="@string/visuals_header">
 
         <SwitchPreferenceCompat
-            app:key="sync"
-            app:title="@string/sync_title" />
-
-        <SwitchPreferenceCompat
-            app:dependency="sync"
-            app:key="attachment"
-            app:summaryOff="@string/attachment_summary_off"
-            app:summaryOn="@string/attachment_summary_on"
-            app:title="@string/attachment_title" />
+            app:key="stroke"
+            app:summaryOff="@string/stroke_summary_off"
+            app:summaryOn="@string/stroke_summary_on"
+            app:title="@string/stroke_title" />
 
     </PreferenceCategory>
 
