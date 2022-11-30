@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/color_12"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_12"
     android:orientation="vertical"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
+    android:paddingBottom="20dp"
     app:layout_constraintBottom_toTopOf="@+id/button_start_game"
-    android:padding="20dp"
     tools:context=".ui.editor.EditGameActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:navigationIcon="@drawable/ic_round_arrow_back_24"
+        app:navigationIconTint="@color/black"
+        app:title="@string/edit_game" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_login"
@@ -17,6 +26,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
         android:text="@string/login_as_administrator" />
 
@@ -118,18 +128,18 @@
             android:text="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_start_game"
-            style="@style/button_primary_style"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:text="@string/start"
-            android:textSize="24sp" />
-    </FrameLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_start_game"
+        style="@style/button_primary_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:text="@string/start"
+        android:textSize="24sp" />
 
 </LinearLayout>

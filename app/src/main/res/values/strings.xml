@@ -147,4 +147,8 @@
     <string name="developers">Developers</string>
     <string name="music_volume">Music volume</string>
     <string name="sounds_volume">Sounds volume</string>
+    <string name="enter_password">Enter password</string>
+    <string name="edit_game">Game settings</string>
+    <string name="edit_diff">Edit difficulty</string>
+    <string name="create_block">Create block</string>
 </resources>

@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_12"
     tools:context=".ui.statistics.StatisticsActivity">
 
     <LinearLayout
@@ -12,8 +13,17 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:navigationIcon="@drawable/ic_round_arrow_back_24"
+            app:navigationIconTint="@color/black"
+            app:title="@string/statistics" />
+
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
+            android:backgroundTint="@color/color_12"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

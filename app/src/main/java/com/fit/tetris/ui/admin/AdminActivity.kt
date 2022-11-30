@@ -40,6 +40,9 @@ class AdminActivity : AppCompatActivity() {
         binding.recyclerShapes.onItemClick {
             viewModel.selected.value!![it] = !viewModel.selected.value!![it]
         }
+        binding.toolbar.setNavigationOnClickListener {
+            this.finish()
+        }
 
         val adapter = ShapeAdapter()
         binding.recyclerShapes.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)

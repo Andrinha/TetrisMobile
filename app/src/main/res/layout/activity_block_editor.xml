@@ -7,14 +7,25 @@
     android:background="@color/color_12"
     tools:context=".ui.admin.BlockEditorActivity">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/materialToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/ic_round_arrow_back_24"
+        app:navigationIconTint="@color/black"
+        app:title="@string/create_block" />
+
     <Button
         android:id="@+id/button_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:padding="10dp"
         android:layout_margin="20dp"
         android:text="@string/save"
+        style="@style/button_primary_style"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,13 +36,13 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="20dp"
-        app:contentPadding="20dp"
         app:cardBackgroundColor="@color/color_12_light"
         app:cardCornerRadius="20dp"
+        app:contentPadding="20dp"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/materialToolbar">
 
 
         <TableLayout

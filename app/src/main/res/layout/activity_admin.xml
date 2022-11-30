@@ -9,6 +9,14 @@
     app:layout_constraintBottom_toTopOf="@+id/button_start_game"
     tools:context=".ui.admin.AdminActivity">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:navigationIcon="@drawable/ic_round_arrow_back_24"
+        app:navigationIconTint="@color/black"
+        app:title="@string/edit_diff" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInput_difficulty"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"

@@ -14,10 +14,7 @@ class AboutActivity : AppCompatActivity() {
 
         binding = ActivityAboutBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        setSupportActionBar(findViewById(R.id.toolbar))
-        binding.toolbarLayout.title = title
-        binding.toolbar.setNavigationOnClickListener {
+        binding.materialToolbar.setNavigationOnClickListener {
             this.finish()
         }
     }

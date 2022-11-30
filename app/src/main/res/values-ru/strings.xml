@@ -47,4 +47,8 @@
     <string name="sounds_header">Звуки</string>
     <string name="music_volume">Громкость музыки</string>
     <string name="sounds_volume">Громкость звуков</string>
+    <string name="enter_password">Введите пароль</string>
+    <string name="edit_game">Настройка игры</string>
+    <string name="edit_diff">Редактирование сложности</string>
+    <string name="create_block">Создание фигуры</string>
 </resources>

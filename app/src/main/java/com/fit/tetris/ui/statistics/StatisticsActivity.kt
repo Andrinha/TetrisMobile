@@ -28,8 +28,8 @@ class StatisticsActivity : AppCompatActivity() {
         pa.adapter = sa
 
         val tabLayout = findViewById<TabLayout>(R.id.tabLayout)
-        tabLayout.addTab(tabLayout.newTab().setText("Bar"))
-        tabLayout.addTab(tabLayout.newTab().setText("Foo"))
+        tabLayout.addTab(tabLayout.newTab().setText("По очкам"))
+        tabLayout.addTab(tabLayout.newTab().setText("По времени"))
 
         binding.tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
@@ -39,6 +39,10 @@ class StatisticsActivity : AppCompatActivity() {
             override fun onTabUnselected(tab: TabLayout.Tab) {}
             override fun onTabReselected(tab: TabLayout.Tab) {}
         })
+
+        binding.toolbar.setNavigationOnClickListener {
+            this.finish()
+        }
 
         pa.registerOnPageChangeCallback(object : OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {

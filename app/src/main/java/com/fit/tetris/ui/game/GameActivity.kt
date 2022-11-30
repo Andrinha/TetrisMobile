@@ -40,7 +40,7 @@ class GameActivity : AppCompatActivity() {
     private val viewModel get() = _viewModel!!
 
     private val mediaPlayer: MediaPlayer by lazy {
-        MediaPlayer.create(this, R.raw.anime)
+        MediaPlayer.create(this, R.raw.anime).apply { isLooping = true }
     }
     private lateinit var soundPool: SoundPool
     private lateinit var assetManager: AssetManager
@@ -65,7 +65,6 @@ class GameActivity : AppCompatActivity() {
         viewModel.createGameGrid()
         delay = 1000L / viewModel.gameData.value!!.speed
         var oldLines = 0
-        mediaPlayer.isLooping = true
 
         binding.frameWell.post {
             val height = binding.frameWell.height
@@ -349,12 +348,13 @@ class GameActivity : AppCompatActivity() {
             name,
             score,
             time,
-            1)
+            1
+        )
         // Add Data to Database
         addRecord(record)
     }
 
-    private fun addRecord(record: Record){
+    private fun addRecord(record: Record) {
         val db = Room.databaseBuilder(
             applicationContext,
             RecordDatabase::class.java, "record_database"

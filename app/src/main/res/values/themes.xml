@@ -18,7 +18,9 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.Tetris.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.Tetris.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" >
+        <item name="colorPrimary">@color/color_12</item>
+    </style>
 
     <style name="Theme.Tetris.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

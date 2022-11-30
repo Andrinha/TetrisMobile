@@ -73,6 +73,9 @@ class EditGameActivity : AppCompatActivity() {
         binding.buttonLogin.setOnClickListener {
             showAlertWithTextInput()
         }
+        binding.toolbar.setNavigationOnClickListener {
+            this.finish()
+        }
     }
 
     private fun showMessageAlert(title: String, message: String) {
@@ -90,10 +93,9 @@ class EditGameActivity : AppCompatActivity() {
         input.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
 
         MaterialAlertDialogBuilder(this)
-            .setTitle("Enter password")
+            .setTitle(resources.getString(R.string.enter_password))
             .setView(input)
-            .setCancelable(false)
-            .setPositiveButton("OK") { _, _ ->
+            .setPositiveButton(resources.getString(R.string.ok)) { _, _ ->
                 if (viewModel.password == input.text.toString()) {
                     val intent = Intent(this, AdminActivity::class.java)
                     startActivity(intent)
@@ -102,9 +104,8 @@ class EditGameActivity : AppCompatActivity() {
                     showMessageAlert(resources.getString(R.string.login), resources.getString(R.string.login_fail))
                 }
             }
-            .setNegativeButton("Cancel") { dialog, _ ->
+            .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
                 dialog.cancel()
-                this.finish()
             }
             .show()
     }
