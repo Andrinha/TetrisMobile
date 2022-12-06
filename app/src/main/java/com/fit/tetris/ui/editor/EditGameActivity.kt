@@ -11,7 +11,6 @@ import com.fit.tetris.R
 import com.fit.tetris.data.GameData
 import com.fit.tetris.databinding.ActivityEditGameBinding
 import com.fit.tetris.ui.admin.AdminActivity
-import com.fit.tetris.ui.admin.BlockEditorActivity
 import com.fit.tetris.ui.game.GameActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
@@ -46,6 +45,7 @@ class EditGameActivity : AppCompatActivity() {
             val height = binding.textHeight.text.toString()
             val speed = binding.textSpeed.text.toString()
             var success = true
+            val difficulty = binding.textDifficulty.text.toString()
 
             if (name.isBlank()) {
                 binding.textInputName.error = getString(R.string.enter_player_name)
@@ -65,7 +65,10 @@ class EditGameActivity : AppCompatActivity() {
             } else binding.textInputSpeed.error = null
             if (success) {
                 val intent = Intent(this, GameActivity::class.java)
-                intent.putExtra("data", GameData(name, width.toInt(), height.toInt(), speed.toInt()))
+                intent.putExtra(
+                    "data",
+                    GameData(name, width.toInt(), height.toInt(), speed.toInt(), difficulty)
+                )
                 startActivity(intent)
             }
         }
@@ -99,9 +102,11 @@ class EditGameActivity : AppCompatActivity() {
                 if (viewModel.password == input.text.toString()) {
                     val intent = Intent(this, AdminActivity::class.java)
                     startActivity(intent)
-                }
-                else {
-                    showMessageAlert(resources.getString(R.string.login), resources.getString(R.string.login_fail))
+                } else {
+                    showMessageAlert(
+                        resources.getString(R.string.login),
+                        resources.getString(R.string.login_fail)
+                    )
                 }
             }
             .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->

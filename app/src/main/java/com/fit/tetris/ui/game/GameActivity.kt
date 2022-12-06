@@ -339,16 +339,20 @@ class GameActivity : AppCompatActivity() {
 
     private fun insertDataToDatabase() {
         val name = viewModel.gameData.value!!.name
-        val time = System.currentTimeMillis() - viewModel.startTime.value!!
+        val currentTimeMillis = System.currentTimeMillis()
+        val gameTime = currentTimeMillis - viewModel.startTime.value!!
         val score = viewModel.score.value!!
+        val difficulty = viewModel.gameData.value!!.difficulty
 
         // Create Record Object
         val record = Record(
             0,
             name,
+            difficulty,
             score,
-            time,
-            1
+            gameTime,
+            currentTimeMillis,
+            0
         )
         // Add Data to Database
         addRecord(record)

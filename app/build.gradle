@@ -63,4 +63,7 @@ dependencies {
 // glide 4.10.0+
     implementation "com.github.bumptech.glide:glide:${GLIDE_VERSION}"
     annotationProcessor "com.github.bumptech.glide:compiler:${GLIDE_VERSION}"
+
+    // time
+    implementation 'joda-time:joda-time:2.12.1'
 }

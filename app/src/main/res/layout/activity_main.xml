@@ -42,30 +42,24 @@
         android:text="@string/settings"
         style="@style/button_menu_style" />
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/text_about"
         android:layout_width="match_parent"
-        android:gravity="center"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal|top"
+        android:text="@string/about"
+        android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/text_about"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:gravity="center_horizontal|top"
-            android:text="@string/about"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/text_devs"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:gravity="center_horizontal|top"
-            android:text="@string/developers"
-            android:textSize="16sp" />
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/text_devs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:gravity="center_horizontal|top"
+        android:text="@string/developers"
+        android:textSize="16sp" />
 
     <View
         android:layout_width="0dp"

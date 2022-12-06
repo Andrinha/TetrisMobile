@@ -8,7 +8,9 @@ data class Record (
     @PrimaryKey(autoGenerate = true)
     val recordId: Int,
     val name: String,
+    val difficulty: String,
     val score: Int,
     val time: Long,
+    val date: Long,
     val type: Int
 )

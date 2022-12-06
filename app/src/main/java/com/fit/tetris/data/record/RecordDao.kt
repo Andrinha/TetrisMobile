@@ -12,9 +12,9 @@ interface RecordDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun addRecord(record: Record)
 
-    @Query("SELECT * FROM record_table WHERE type = 1")
+    @Query("SELECT * FROM record_table WHERE type = 0")
     fun readScoreRecords(): LiveData<List<Record>>
 
-    @Query("SELECT * FROM record_table WHERE type = 0")
+    @Query("SELECT * FROM record_table WHERE type = 1")
     fun readTimeRecords(): LiveData<List<Record>>
 }

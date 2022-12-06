@@ -29,8 +29,8 @@
     <string name="shape_name">Название фигуры</string>
     <string name="unnamed_shape">Безымянная</string>
     <string name="difficulty">Сложность</string>
-    <string name="about">Информация</string>
-    <string name="title_activity_about">Информация</string>
+    <string name="about">Справочная информация</string>
+    <string name="title_activity_about">Справочная информация</string>
     <string name="next">Следующая</string>
     <string name="easy">Легкая</string>
     <string name="hard">Сложная</string>
