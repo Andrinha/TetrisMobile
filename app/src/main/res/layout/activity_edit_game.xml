@@ -59,7 +59,7 @@
             android:id="@+id/text_difficulty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="@string/preset"
+            android:hint="@string/difficulty"
             android:inputType="none"
             android:text="@string/normal" />
 
@@ -69,6 +69,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
+        android:visibility="gone"
         android:orientation="horizontal">
 
         <com.google.android.material.textfield.TextInputLayout
@@ -116,6 +117,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_marginBottom="10dp">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -127,6 +129,27 @@
             android:singleLine="true"
             android:text="1" />
     </com.google.android.material.textfield.TextInputLayout>
+
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <RadioButton
+            android:id="@+id/radio_score"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:checked="true"
+            android:text="Игра по очкам" />
+
+        <RadioButton
+            android:id="@+id/radio_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="Игра по времени" />
+    </RadioGroup>
 
     <Space
         android:layout_width="0dp"

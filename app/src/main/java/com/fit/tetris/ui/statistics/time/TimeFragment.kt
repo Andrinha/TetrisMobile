@@ -1,4 +1,4 @@
-package com.fit.tetris.ui.statistics
+package com.fit.tetris.ui.statistics.time
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,14 +8,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fit.tetris.adapters.RecordAdapter
-import com.fit.tetris.databinding.FragmentScoreBinding
+import com.fit.tetris.databinding.FragmentTimeBinding
 
-class ScoreFragment : Fragment() {
+class TimeFragment : Fragment() {
 
-    private var _binding: FragmentScoreBinding? = null
+    private var _binding: FragmentTimeBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: ScoreViewModel by lazy {
-        ViewModelProvider(this)[ScoreViewModel::class.java]
+    private val viewModel: TimeViewModel by lazy {
+        ViewModelProvider(this)[TimeViewModel::class.java]
     }
     private val adapter = RecordAdapter()
 
@@ -23,7 +23,7 @@ class ScoreFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentScoreBinding.inflate(inflater, container, false)
+        _binding = FragmentTimeBinding.inflate(inflater, container, false)
 
         viewModel.readAllData.observe(viewLifecycleOwner) {
             adapter.setData(it)

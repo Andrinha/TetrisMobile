@@ -9,6 +9,8 @@ import com.fit.tetris.R
 import com.fit.tetris.data.record.Record
 import com.fit.tetris.databinding.ItemRecordBinding
 import com.fit.tetris.utils.toDateTime
+import com.fit.tetris.utils.toTime
+import com.fit.tetris.utils.toTimeFormat
 import java.util.*
 
 class RecordAdapter : RecyclerView.Adapter<RecordAdapter.RecordHolder>() {
@@ -39,7 +41,7 @@ class RecordAdapter : RecyclerView.Adapter<RecordAdapter.RecordHolder>() {
         fun bind(record: Record) = with(binding) {
             textName.text = record.name
             textDifficulty.text = record.difficulty
-            textScore.text = if (record.type == 0) "Score: ${record.score}" else "Time: ${record.time}"
+            textScore.text = if (record.type == 0) "Очки: ${record.score}" else "Время: ${record.time.toTimeFormat()}"
             textDate.text = record.date.toDateTime()
         }
     }

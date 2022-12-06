@@ -4,7 +4,7 @@
     android:id="@+id/recycler_records"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.statistics.ScoreFragment"
+    tools:context=".ui.statistics.score.ScoreFragment"
     tools:listitem="@layout/item_record">
 
 </androidx.recyclerview.widget.RecyclerView>

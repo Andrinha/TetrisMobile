@@ -46,6 +46,7 @@ class EditGameActivity : AppCompatActivity() {
             val speed = binding.textSpeed.text.toString()
             var success = true
             val difficulty = binding.textDifficulty.text.toString()
+            val type = if (binding.radioScore.isChecked) 0 else 1
 
             if (name.isBlank()) {
                 binding.textInputName.error = getString(R.string.enter_player_name)
@@ -67,7 +68,7 @@ class EditGameActivity : AppCompatActivity() {
                 val intent = Intent(this, GameActivity::class.java)
                 intent.putExtra(
                     "data",
-                    GameData(name, width.toInt(), height.toInt(), speed.toInt(), difficulty)
+                    GameData(name, width.toInt(), height.toInt(), speed.toInt(), difficulty, type)
                 )
                 startActivity(intent)
             }

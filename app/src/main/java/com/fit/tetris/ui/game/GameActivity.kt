@@ -343,6 +343,7 @@ class GameActivity : AppCompatActivity() {
         val gameTime = currentTimeMillis - viewModel.startTime.value!!
         val score = viewModel.score.value!!
         val difficulty = viewModel.gameData.value!!.difficulty
+        val type = viewModel.gameData.value!!.type
 
         // Create Record Object
         val record = Record(
@@ -352,7 +353,7 @@ class GameActivity : AppCompatActivity() {
             score,
             gameTime,
             currentTimeMillis,
-            0
+            type
         )
         // Add Data to Database
         addRecord(record)

@@ -1,4 +1,4 @@
-package com.fit.tetris.ui.statistics
+package com.fit.tetris.ui.statistics.time
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
