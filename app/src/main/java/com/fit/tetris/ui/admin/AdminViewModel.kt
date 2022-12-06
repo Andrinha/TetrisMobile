@@ -9,17 +9,9 @@ import com.fit.tetris.data.shape.ShapeDatabase
 import com.fit.tetris.repository.ShapeRepository
 
 class AdminViewModel(application: Application): AndroidViewModel(application) {
-    val readAllData: LiveData<List<Shape>>
-    val selected = MutableLiveData<ArrayList<Boolean>>(arrayListOf())
-
-    private val repository: ShapeRepository
-
-    init {
-        val userDao = ShapeDatabase.getDatabase(application).shapeDao()
-        repository = ShapeRepository(userDao)
-        readAllData = repository.readAllData
-//        readAllData.value!!.forEach { _ ->
-//            selected.value!!.add(false)
-//        }
-    }
+    val selected: MutableLiveData<List<Boolean>> = MutableLiveData(mutableListOf())
+    val isDataReceived: MutableLiveData<Boolean> = MutableLiveData(false)
+    private val userDao = ShapeDatabase.getDatabase(application).shapeDao()
+    private val repository = ShapeRepository(userDao)
+    val shapesData: LiveData<List<Shape>> = repository.readAllData
 }

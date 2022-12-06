@@ -2,18 +2,14 @@ package com.fit.tetris.ui.admin
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.fit.tetris.R
 import com.fit.tetris.adapters.ShapeAdapter
 import com.fit.tetris.databinding.ActivityAdminBinding
 import com.fit.tetris.utils.onItemClick
-import com.fit.tetris.utils.setOnItemClickListener
-import kotlinx.android.synthetic.main.activity_admin.*
+import java.util.*
 
 class AdminActivity : AppCompatActivity() {
 
@@ -22,6 +18,7 @@ class AdminActivity : AppCompatActivity() {
 
     private var _viewModel: AdminViewModel? = null
     private val viewModel get() = _viewModel!!
+    private val adapter = ShapeAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,38 +26,53 @@ class AdminActivity : AppCompatActivity() {
         _viewModel = ViewModelProvider(this)[AdminViewModel::class.java]
         setContentView(binding.root)
 
-        binding.buttonBlockEditor.setOnClickListener {
-            val intent = Intent(this, BlockEditorActivity::class.java)
-            startActivity(intent)
-        }
-        binding.buttonSave.setOnClickListener {
-            this.finish()
-        }
-
-        binding.recyclerShapes.onItemClick {
-            viewModel.selected.value!![it] = !viewModel.selected.value!![it]
-        }
-        binding.toolbar.setNavigationOnClickListener {
-            this.finish()
-        }
-
-        val adapter = ShapeAdapter()
-        binding.recyclerShapes.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-        binding.recyclerShapes.adapter = adapter
-
-        viewModel.readAllData.observe(this) { shape ->
-            adapter.addShape(shape)
-            //viewModel.selected.value!!.add(false)
+        binding.apply {
+            buttonBlockEditor.setOnClickListener {
+                val intent = Intent(this@AdminActivity, BlockEditorActivity::class.java)
+                startActivity(intent)
+            }
+            buttonSave.setOnClickListener {
+                this@AdminActivity.finish()
+            }
+            recyclerShapes.onItemClick {
+                val data = viewModel.selected.value!!.toMutableList()
+                data[it] = !data[it]
+                viewModel.selected.value = data
+            }
+            toolbar.setNavigationOnClickListener {
+                this@AdminActivity.finish()
+            }
+            recyclerShapes.layoutManager = LinearLayoutManager(this@AdminActivity, RecyclerView.HORIZONTAL, false)
+            recyclerShapes.adapter = adapter
         }
 
-//        viewModel.selected.observe(this) {
-//            it.forEachIndexed { i, b ->
-//                if (b)
-//                    binding.recyclerShapes[i].setBackgroundColor(getColor(R.color.color_15))
-//                else
-//                    binding.recyclerShapes[i].setBackgroundColor(getColor(R.color.color_12_light))
-//            }
-//        }
+        viewModel.apply {
+            shapesData.observe(this@AdminActivity) { shape ->
+                if (isDataReceived.value != true) {
+                    val data = viewModel.selected.value!!.toMutableList()
+                    shape.forEach {
+                        data.add(false)
+                        while (it.r + it.g + it.b !in 255 .. 512) {
+                            it.r = Random().nextInt(256)
+                            it.g = Random().nextInt(256)
+                            it.b = Random().nextInt(256)
+                        }
+                    }
+                    viewModel.selected.value = data
+                    isDataReceived.value = true
+                }
+                adapter.setData(shape)
+            }
+            selected.observe(this@AdminActivity) { selected ->
+                if (!shapesData.value.isNullOrEmpty()) {
+                    val data = viewModel.shapesData.value!!.toMutableList()
+                    selected.forEachIndexed { i, isSelected ->
+                        data[i].selected = isSelected
+                    }
+                    adapter.setData(data)
+                }
+            }
+        }
     }
 
     override fun onDestroy() {

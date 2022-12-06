@@ -75,7 +75,9 @@ class EditGameActivity : AppCompatActivity() {
         }
 
         binding.buttonLogin.setOnClickListener {
-            showAlertWithTextInput()
+            //showAlertWithTextInput()
+            val intent = Intent(this, AdminActivity::class.java)
+            startActivity(intent)
         }
         binding.toolbar.setNavigationOnClickListener {
             this.finish()

@@ -2,87 +2,96 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="100dp"
+    android:id="@+id/card_main"
+    android:layout_width="120dp"
     android:layout_height="wrap_content"
-    android:layout_marginEnd="10dp"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
+    android:layout_margin="5dp"
     app:cardBackgroundColor="@color/color_12_light"
     app:cardCornerRadius="10dp"
-    app:contentPadding="4dp">
+    app:contentPadding="5dp">
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        app:contentPadding="5dp"
+        app:cardBackgroundColor="@color/color_12_light"
+        app:cardElevation="0dp"
+        app:cardCornerRadius="5dp">
 
-        <TableLayout
-            android:id="@+id/table"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="@color/color_12_light"
-            android:padding="15dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <TableRow
+            <TableLayout
+                android:id="@+id/table"
                 android:layout_width="match_parent"
-                android:layout_weight="1">
+                android:layout_height="100dp"
+                android:background="@color/color_12_light"
+                android:padding="15dp">
 
-                <View android:layout_weight="1" />
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_weight="1">
 
-                <View android:layout_weight="1" />
+                    <View android:layout_weight="1" />
 
-                <View android:layout_weight="1" />
+                    <View android:layout_weight="1" />
 
-                <View android:layout_weight="1" />
-            </TableRow>
+                    <View android:layout_weight="1" />
 
-            <TableRow
+                    <View android:layout_weight="1" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_weight="1">
+
+                    <View android:layout_weight="1" />
+
+                    <View android:layout_weight="1" />
+
+                    <View android:layout_weight="1" />
+
+                    <View android:layout_weight="1" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_weight="1">
+
+                    <View android:layout_weight="1" />
+
+                    <View android:layout_weight="1" />
+
+                    <View android:layout_weight="1" />
+
+                    <View android:layout_weight="1" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_weight="1">
+
+                    <View android:layout_weight="1" />
+
+                    <View android:layout_weight="1" />
+
+                    <View android:layout_weight="1" />
+
+                    <View android:layout_weight="1" />
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:id="@+id/text_shape_name"
                 android:layout_width="match_parent"
-                android:layout_weight="1">
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                tools:text="Sample text" />
 
-                <View android:layout_weight="1" />
+        </LinearLayout>
 
-                <View android:layout_weight="1" />
-
-                <View android:layout_weight="1" />
-
-                <View android:layout_weight="1" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_weight="1">
-
-                <View android:layout_weight="1" />
-
-                <View android:layout_weight="1" />
-
-                <View android:layout_weight="1" />
-
-                <View android:layout_weight="1" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_weight="1">
-
-                <View android:layout_weight="1" />
-
-                <View android:layout_weight="1" />
-
-                <View android:layout_weight="1" />
-
-                <View android:layout_weight="1" />
-            </TableRow>
-        </TableLayout>
-
-        <TextView
-            android:id="@+id/text_shape_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            tools:text="Sample text" />
-
-    </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 </androidx.cardview.widget.CardView>
