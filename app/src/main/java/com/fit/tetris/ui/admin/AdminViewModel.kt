@@ -14,6 +14,8 @@ import com.fit.tetris.repository.ShapeRepository
 class AdminViewModel(application: Application) : AndroidViewModel(application) {
     val selected: MutableLiveData<List<Boolean>> = MutableLiveData(mutableListOf())
     val isDataReceived: MutableLiveData<Boolean> = MutableLiveData(false)
+    val selectedDifficulty = MutableLiveData("")
+
     private val shapeDao = ShapeDatabase.getDatabase(application).shapeDao()
     private val shapeRepository = ShapeRepository(shapeDao)
     val shapesData: LiveData<List<Shape>> = shapeRepository.readAllData

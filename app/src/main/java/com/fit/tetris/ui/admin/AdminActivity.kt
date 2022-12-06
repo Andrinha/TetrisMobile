@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.GridLayout.HORIZONTAL
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -20,6 +21,8 @@ import com.fit.tetris.data.difficulty.DifficultyDatabase
 import com.fit.tetris.databinding.ActivityAdminBinding
 import com.fit.tetris.ui.blockeditor.BlockEditorActivity
 import com.fit.tetris.utils.onItemClick
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textview.MaterialTextView
 import org.joda.time.format.DateTimeFormat
 import java.util.*
 
@@ -57,6 +60,9 @@ class AdminActivity : AppCompatActivity() {
             }
             recyclerShapes.layoutManager = GridLayoutManager(this@AdminActivity, 3, GridLayoutManager.HORIZONTAL, false)//LinearLayoutManager(this@AdminActivity, RecyclerView.HORIZONTAL, false)
             recyclerShapes.adapter = adapter
+            textDifficulty.setOnItemClickListener { _, view, _, _ ->
+                viewModel.selectedDifficulty.value = (view as MaterialTextView).text.toString()
+            }
         }
 
         viewModel.apply {
@@ -93,6 +99,22 @@ class AdminActivity : AppCompatActivity() {
                     adapter.setData(data)
                 }
             }
+            selectedDifficulty.observe(this@AdminActivity) { difficulty ->
+                if (!difficultyData.value.isNullOrEmpty()) {
+                    val find = difficultyData.value!!.find { it.name == difficulty }
+                    if (find != null) {
+                        binding.textWidth.setText(find.width.toString())
+                        binding.textHeight.setText(find.height.toString())
+                        binding.textName.setText(find.name)
+
+                        val newSelected: MutableList<Boolean> = selected.value!!.toMutableList()
+                        viewModel.shapesData.value!!.forEachIndexed { i, shape ->
+                            newSelected[i] = find.shapes.contains(shape.tiles)
+                        }
+                        viewModel.selected.value = newSelected
+                    }
+                }
+            }
         }
     }
 
@@ -100,7 +122,12 @@ class AdminActivity : AppCompatActivity() {
         val name = binding.textName.text.toString()
         val width = binding.textWidth.text.toString()
         val height = binding.textHeight.text.toString()
-        val shapes: List<Int> = listOf()
+        val shapes: MutableList<Int> = mutableListOf()
+        viewModel.shapesData.value!!.forEachIndexed { i, shape ->
+            if (viewModel.selected.value!![i]) {
+                shapes.add(shape.tiles)
+            }
+        }
 
         val difficulty = Difficulty(
             0,
