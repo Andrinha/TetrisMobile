@@ -36,7 +36,7 @@ class EditGameActivity : AppCompatActivity() {
         val custom = getString(R.string.custon)
 
         val items = listOf(easy, normal, hard, custom)
-        val adapter = ArrayAdapter(this, R.layout.list_item, items)
+        val adapter = ArrayAdapter(this, R.layout.item_list, items)
         (binding.textInputDifficulty.editText as? AutoCompleteTextView)?.setAdapter(adapter)
 
         binding.buttonStartGame.setOnClickListener {

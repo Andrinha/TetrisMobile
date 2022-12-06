@@ -1,4 +1,4 @@
-package com.fit.tetris.ui.admin
+package com.fit.tetris.ui.blockeditor
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

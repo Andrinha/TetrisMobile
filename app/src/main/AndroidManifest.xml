@@ -39,7 +39,7 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ui.admin.BlockEditorActivity"
+            android:name=".ui.blockeditor.BlockEditorActivity"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"

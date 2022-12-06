@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         app:navigationIcon="@drawable/ic_round_arrow_back_24"
         app:navigationIconTint="@color/black"
-        app:title="@string/statistics" />
+        app:title="@string/settings" />
 
     <FrameLayout
         android:id="@+id/settings"

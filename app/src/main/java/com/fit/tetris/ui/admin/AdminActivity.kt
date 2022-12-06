@@ -2,12 +2,17 @@ package com.fit.tetris.ui.admin
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.fit.tetris.R
 import com.fit.tetris.adapters.ShapeAdapter
 import com.fit.tetris.databinding.ActivityAdminBinding
+import com.fit.tetris.ui.blockeditor.BlockEditorActivity
 import com.fit.tetris.utils.onItemClick
 import java.util.*
 
@@ -26,6 +31,10 @@ class AdminActivity : AppCompatActivity() {
         _viewModel = ViewModelProvider(this)[AdminViewModel::class.java]
         setContentView(binding.root)
 
+        val items = listOf("easy", "normal", "hard", "custom")
+        val difficultyAdapter = ArrayAdapter(this, R.layout.item_list, items)
+        (binding.textInputDifficulty.editText as? AutoCompleteTextView)?.setAdapter(difficultyAdapter)
+
         binding.apply {
             buttonBlockEditor.setOnClickListener {
                 val intent = Intent(this@AdminActivity, BlockEditorActivity::class.java)
@@ -42,7 +51,7 @@ class AdminActivity : AppCompatActivity() {
             toolbar.setNavigationOnClickListener {
                 this@AdminActivity.finish()
             }
-            recyclerShapes.layoutManager = LinearLayoutManager(this@AdminActivity, RecyclerView.HORIZONTAL, false)
+            recyclerShapes.layoutManager =  GridLayoutManager(this@AdminActivity, 3)//LinearLayoutManager(this@AdminActivity, RecyclerView.HORIZONTAL, false)
             recyclerShapes.adapter = adapter
         }
 

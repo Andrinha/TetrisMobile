@@ -44,14 +44,6 @@ class ShapeAdapter: RecyclerView.Adapter<ShapeAdapter.ShapeHolder>() {
     class ShapeHolder(item: View): RecyclerView.ViewHolder(item) {
         private val binding = ShapeItemBinding.bind(item)
         fun bind(shape: Shape) = with(binding){
-//            var r = 0
-//            var g = 0
-//            var b = 0
-//            while (r + g + b !in 255 .. 512) {
-//                r = Random().nextInt(256)
-//                g = Random().nextInt(256)
-//                b = Random().nextInt(256)
-//            }
             val bg = itemView.context.getColor(R.color.color_12_light) //if (shape.selected) itemView.context.getColor(R.color.color_15) else itemView.context.getColor(R.color.color_12_light)
             val fg = Color.rgb(shape.r, shape.g, shape.b)
             var str = shape.tiles.toString(2)

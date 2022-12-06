@@ -1,4 +1,4 @@
-package com.fit.tetris.ui.admin
+package com.fit.tetris.ui.blockeditor
 
 import android.graphics.Color
 import android.os.Bundle
@@ -43,6 +43,9 @@ class BlockEditorActivity : AppCompatActivity() {
 
         binding.buttonSave.setOnClickListener {
             insertDataToDatabase()
+            this.finish()
+        }
+        binding.materialToolbar.setOnClickListener {
             this.finish()
         }
         setTableTouchListener(binding.table)

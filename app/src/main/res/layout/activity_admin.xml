@@ -85,9 +85,10 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_shapes"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:clipToPadding="false"
         android:orientation="horizontal"
+        android:layout_weight="1"
         android:paddingStart="20dp"
         android:paddingEnd="15dp"
         tools:itemCount="1"
@@ -103,18 +104,13 @@
         android:layout_margin="16dp"
         android:text="@string/block_editor" />
 
-    <FrameLayout
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_save"
+        style="@style/button_primary_style"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_save"
-            style="@style/button_primary_style"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_margin="20dp"
-            android:text="@string/save" />
-    </FrameLayout>
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="20dp"
+        android:text="@string/save" />
 
 </LinearLayout>
