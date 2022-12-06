@@ -4,16 +4,23 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.GridLayout.HORIZONTAL
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.HORIZONTAL
+import androidx.recyclerview.widget.RecyclerView.Orientation
+import androidx.room.Room
 import com.fit.tetris.R
 import com.fit.tetris.adapters.ShapeAdapter
+import com.fit.tetris.data.difficulty.Difficulty
+import com.fit.tetris.data.difficulty.DifficultyDatabase
 import com.fit.tetris.databinding.ActivityAdminBinding
 import com.fit.tetris.ui.blockeditor.BlockEditorActivity
 import com.fit.tetris.utils.onItemClick
+import org.joda.time.format.DateTimeFormat
 import java.util.*
 
 class AdminActivity : AppCompatActivity() {
@@ -31,16 +38,13 @@ class AdminActivity : AppCompatActivity() {
         _viewModel = ViewModelProvider(this)[AdminViewModel::class.java]
         setContentView(binding.root)
 
-        val items = listOf("easy", "normal", "hard", "custom")
-        val difficultyAdapter = ArrayAdapter(this, R.layout.item_list, items)
-        (binding.textInputDifficulty.editText as? AutoCompleteTextView)?.setAdapter(difficultyAdapter)
-
         binding.apply {
             buttonBlockEditor.setOnClickListener {
                 val intent = Intent(this@AdminActivity, BlockEditorActivity::class.java)
                 startActivity(intent)
             }
             buttonSave.setOnClickListener {
+                insertDataToDatabase()
                 this@AdminActivity.finish()
             }
             recyclerShapes.onItemClick {
@@ -51,7 +55,7 @@ class AdminActivity : AppCompatActivity() {
             toolbar.setNavigationOnClickListener {
                 this@AdminActivity.finish()
             }
-            recyclerShapes.layoutManager =  GridLayoutManager(this@AdminActivity, 3)//LinearLayoutManager(this@AdminActivity, RecyclerView.HORIZONTAL, false)
+            recyclerShapes.layoutManager = GridLayoutManager(this@AdminActivity, 3, GridLayoutManager.HORIZONTAL, false)//LinearLayoutManager(this@AdminActivity, RecyclerView.HORIZONTAL, false)
             recyclerShapes.adapter = adapter
         }
 
@@ -72,6 +76,14 @@ class AdminActivity : AppCompatActivity() {
                 }
                 adapter.setData(shape)
             }
+            difficultyData.observe(this@AdminActivity) { difficulties ->
+                val data: MutableList<String> = mutableListOf()
+                difficulties.forEach {
+                    data.add(it.name)
+                }
+                val adapter = ArrayAdapter(this@AdminActivity, R.layout.item_list, data)
+                (binding.textInputDifficulty.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+            }
             selected.observe(this@AdminActivity) { selected ->
                 if (!shapesData.value.isNullOrEmpty()) {
                     val data = viewModel.shapesData.value!!.toMutableList()
@@ -82,6 +94,32 @@ class AdminActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun insertDataToDatabase() {
+        val name = binding.textName.text.toString()
+        val width = binding.textWidth.text.toString()
+        val height = binding.textHeight.text.toString()
+        val shapes: List<Int> = listOf()
+
+        val difficulty = Difficulty(
+            0,
+            name,
+            width.toInt(),
+            height.toInt(),
+            shapes
+        )
+        addRecord(difficulty)
+    }
+
+    private fun addRecord(difficulty: Difficulty) {
+        val db = Room.databaseBuilder(
+            this,
+            DifficultyDatabase::class.java, "difficulty_table"
+        ).allowMainThreadQueries().build()
+
+        val recordDao = db.difficultyDao()
+        recordDao.addRecord(difficulty)
     }
 
     override fun onDestroy() {

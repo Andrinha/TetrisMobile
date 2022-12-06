@@ -30,15 +30,6 @@ class EditGameActivity : AppCompatActivity() {
         _binding = ActivityEditGameBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val easy = getString(R.string.easy)
-        val normal = getString(R.string.normal)
-        val hard = getString(R.string.hard)
-        val custom = getString(R.string.custon)
-
-        val items = listOf(easy, normal, hard, custom)
-        val adapter = ArrayAdapter(this, R.layout.item_list, items)
-        (binding.textInputDifficulty.editText as? AutoCompleteTextView)?.setAdapter(adapter)
-
         binding.buttonStartGame.setOnClickListener {
             val name = binding.textName.text.toString()
             val width = binding.textWidth.text.toString()
@@ -81,6 +72,14 @@ class EditGameActivity : AppCompatActivity() {
         }
         binding.toolbar.setNavigationOnClickListener {
             this.finish()
+        }
+        viewModel.difficultyData.observe(this) { difficulties ->
+            val data: MutableList<String> = mutableListOf()
+            difficulties.forEach {
+                data.add(it.name)
+            }
+            val adapter = ArrayAdapter(this, R.layout.item_list, data)
+            (binding.textInputDifficulty.editText as? AutoCompleteTextView)?.setAdapter(adapter)
         }
     }
 
