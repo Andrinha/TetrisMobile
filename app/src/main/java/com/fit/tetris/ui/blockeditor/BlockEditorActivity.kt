@@ -92,7 +92,6 @@ class BlockEditorActivity : AppCompatActivity() {
     }
 
     private fun insertDataToDatabase() {
-        val name = binding.textName.text.toString()
         var tiles = ""
         repeat(4) { j ->
             repeat(4) { i ->
@@ -101,7 +100,6 @@ class BlockEditorActivity : AppCompatActivity() {
         }
         val record = Shape(
             0,
-            name,
             tiles.toInt(2))
         addShape(record)
     }

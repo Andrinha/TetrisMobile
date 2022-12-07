@@ -8,7 +8,6 @@ import androidx.room.PrimaryKey
 data class Shape (
     @PrimaryKey(autoGenerate = true)
     val shapeId: Int,
-    val name: String,
     val tiles: Int,
     var selected: Boolean = false,
     var r: Int = 0,

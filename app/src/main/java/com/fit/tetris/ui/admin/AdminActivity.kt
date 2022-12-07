@@ -4,15 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import android.widget.GridLayout.HORIZONTAL
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.HORIZONTAL
-import androidx.recyclerview.widget.RecyclerView.Orientation
 import androidx.room.Room
 import com.fit.tetris.R
 import com.fit.tetris.adapters.ShapeAdapter
@@ -21,9 +15,7 @@ import com.fit.tetris.data.difficulty.DifficultyDatabase
 import com.fit.tetris.databinding.ActivityAdminBinding
 import com.fit.tetris.ui.blockeditor.BlockEditorActivity
 import com.fit.tetris.utils.onItemClick
-import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
-import org.joda.time.format.DateTimeFormat
 import java.util.*
 
 class AdminActivity : AppCompatActivity() {
@@ -31,14 +23,14 @@ class AdminActivity : AppCompatActivity() {
     private var _binding: ActivityAdminBinding? = null
     private val binding get() = _binding!!
 
-    private var _viewModel: AdminViewModel? = null
-    private val viewModel get() = _viewModel!!
+    private val viewModel by lazy {
+        ViewModelProvider(this)[AdminViewModel::class.java]
+    }
     private val adapter = ShapeAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityAdminBinding.inflate(layoutInflater)
-        _viewModel = ViewModelProvider(this)[AdminViewModel::class.java]
         setContentView(binding.root)
 
         binding.apply {
@@ -58,7 +50,10 @@ class AdminActivity : AppCompatActivity() {
             toolbar.setNavigationOnClickListener {
                 this@AdminActivity.finish()
             }
-            recyclerShapes.layoutManager = GridLayoutManager(this@AdminActivity, 3, GridLayoutManager.HORIZONTAL, false)//LinearLayoutManager(this@AdminActivity, RecyclerView.HORIZONTAL, false)
+            recyclerShapes.layoutManager = GridLayoutManager(
+                this@AdminActivity,
+                3
+            )//LinearLayoutManager(this@AdminActivity, RecyclerView.HORIZONTAL, false)
             recyclerShapes.adapter = adapter
             textDifficulty.setOnItemClickListener { _, view, _, _ ->
                 viewModel.selectedDifficulty.value = (view as MaterialTextView).text.toString()
@@ -71,7 +66,7 @@ class AdminActivity : AppCompatActivity() {
                     val data = viewModel.selected.value!!.toMutableList()
                     shape.forEach {
                         data.add(false)
-                        while (it.r + it.g + it.b !in 255 .. 512) {
+                        while (it.r + it.g + it.b !in 255..512) {
                             it.r = Random().nextInt(256)
                             it.g = Random().nextInt(256)
                             it.b = Random().nextInt(256)
@@ -89,6 +84,8 @@ class AdminActivity : AppCompatActivity() {
                 }
                 val adapter = ArrayAdapter(this@AdminActivity, R.layout.item_list, data)
                 (binding.textInputDifficulty.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+
+
             }
             selected.observe(this@AdminActivity) { selected ->
                 if (!shapesData.value.isNullOrEmpty()) {
