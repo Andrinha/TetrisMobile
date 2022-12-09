@@ -129,6 +129,12 @@
             android:text="1" />
     </com.google.android.material.textfield.TextInputLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="Выбранные фигуры: "/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_shapes"
         android:layout_width="match_parent"

@@ -25,4 +25,5 @@ class EditGameViewModel(application: Application) : AndroidViewModel(application
 
     val selectedDifficulty = MutableLiveData("")
     val selected: MutableLiveData<List<Boolean>> = MutableLiveData(mutableListOf())
+    val selectedDifficultyItem: MutableLiveData<Difficulty> = MutableLiveData()
 }

@@ -114,13 +114,14 @@ class EditGameActivity : AppCompatActivity() {
                     if (find != null) {
                         binding.textWidth.setText(find.width.toString())
                         binding.textHeight.setText(find.height.toString())
-                        binding.textName.setText(find.name)
+                        //binding.textName.setText(find.name)
 
                         val newSelected: MutableList<Boolean> = selected.value!!.toMutableList()
                         viewModel.shapesData.value!!.forEachIndexed { i, shape ->
                             newSelected[i] = find.shapes.contains(shape.tiles)
                         }
                         viewModel.selected.value = newSelected
+                        viewModel.selectedDifficultyItem.value = find
                     }
                 }
             }
