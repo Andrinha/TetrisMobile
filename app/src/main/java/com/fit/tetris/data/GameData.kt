@@ -1,5 +1,10 @@
 package com.fit.tetris.data
 
+import com.fit.tetris.data.difficulty.Difficulty
 import java.io.Serializable
 
-data class GameData(val name: String, val width: Int, val height: Int, var speed: Int, val difficulty: String, val type: Int): Serializable
+data class GameData(
+    val name: String,
+    val difficulty: Difficulty,
+    val type: Int
+) : Serializable

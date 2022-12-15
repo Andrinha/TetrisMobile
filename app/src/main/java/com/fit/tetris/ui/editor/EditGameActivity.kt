@@ -11,9 +11,11 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.fit.tetris.R
 import com.fit.tetris.adapters.ShapeAdapter
 import com.fit.tetris.data.GameData
+import com.fit.tetris.data.shape.Shape
 import com.fit.tetris.databinding.ActivityEditGameBinding
 import com.fit.tetris.ui.admin.AdminActivity
 import com.fit.tetris.ui.game.GameActivity
+import com.fit.tetris.utils.BaseShapes
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
@@ -60,16 +62,15 @@ class EditGameActivity : AppCompatActivity() {
                     binding.textInputSpeed.error = getString(R.string.speed_range)
                     success = false
                 } else binding.textInputSpeed.error = null
+
+
                 if (success) {
                     val intent = Intent(this@EditGameActivity, GameActivity::class.java)
                     intent.putExtra(
                         "data",
                         GameData(
                             name,
-                            width.toInt(),
-                            height.toInt(),
-                            speed.toInt(),
-                            difficulty,
+                            viewModel.selectedDifficultyItem.value!!,
                             type
                         )
                     )
@@ -106,7 +107,7 @@ class EditGameActivity : AppCompatActivity() {
                     }
                 }
                 viewModel.selected.value = data
-                adapter.setData(shape)
+                adapter.setData(shape + BaseShapes().list.map { Shape(0, it, isBase = true) })
             }
             selectedDifficulty.observe(this@EditGameActivity) { difficulty ->
                 if (!difficultyData.value.isNullOrEmpty()) {
@@ -131,7 +132,7 @@ class EditGameActivity : AppCompatActivity() {
                     selected.forEachIndexed { i, isSelected ->
                         data[i].selected = isSelected
                     }
-                    adapter.setData(data.filter { it.selected })
+                    adapter.setData(data.filter { it.selected } + BaseShapes().list.map { Shape(0, it, isBase = true) })
                 }
             }
             difficultyData.observe(this@EditGameActivity) { difficulties ->

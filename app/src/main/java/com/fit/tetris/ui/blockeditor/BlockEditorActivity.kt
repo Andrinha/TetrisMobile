@@ -62,6 +62,13 @@ class BlockEditorActivity : AppCompatActivity() {
                     )
                 }
             }
+            var intTiles = ""
+            repeat(4) { j ->
+                repeat(4) { i ->
+                    intTiles += (if (viewModel.tiles.value!![i][j]) "1" else "0")
+                }
+            }
+            binding.textValue.text = intTiles.toInt(2).toString()
         }
     }
 

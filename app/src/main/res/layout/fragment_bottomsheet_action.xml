@@ -1,0 +1,56 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/dp_8"
+    android:layout_marginBottom="@dimen/dp_8"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_bottom_sheet_heading"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_56"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:gravity="center"
+        android:text="Настройка фигуры"
+        android:textColor="@color/black33"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_btn_edit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:backgroundTint="@android:color/white"
+        android:drawablePadding="@dimen/dp_32"
+        android:gravity="start|center_vertical"
+        android:text="Редактировать"
+        android:textColor="@color/black33"
+        android:textSize="16sp"
+        app:drawableStartCompat="@drawable/ic_baseline_edit_24" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/dp_8"
+        android:background="@color/black33" />
+
+    <TextView
+        android:id="@+id/tv_btn_remove"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_48"
+        android:layout_marginStart="@dimen/dp_16"
+        android:layout_marginEnd="@dimen/dp_16"
+        android:layout_marginBottom="@dimen/dp_16"
+        android:backgroundTint="@android:color/white"
+        android:drawablePadding="@dimen/dp_32"
+        android:gravity="start|center_vertical"
+        android:text="@string/delete"
+        android:textColor="@color/black33"
+        android:textSize="16sp"
+        app:drawableStartCompat="@drawable/ic_baseline_delete_24"
+        app:drawableTint="@color/black33" />
+
+</LinearLayout>

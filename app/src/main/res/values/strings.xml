@@ -64,4 +64,8 @@
     <string name="edit_diff">Edit difficulty</string>
     <string name="create_block">Create block</string>
     <string name="difficulty_name">Название сложности</string>
+    <string name="difficulty_speed">Скорость</string>
+    <string name="editor">Редактор сложностей</string>
+    <string name="bottom_sheet_option_heading">bottom_sheet_option_heading</string>
+    <string name="delete">Удалить</string>
 </resources>

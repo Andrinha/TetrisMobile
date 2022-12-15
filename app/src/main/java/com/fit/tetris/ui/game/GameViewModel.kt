@@ -73,7 +73,7 @@ class GameViewModel: ViewModel() {
         }
         val cleared = gameGrid.value!!.clearFullRows()
         score.value = score.value!! + cleared * cleared * gameGrid.value!!.width *
-                gameData.value!!.speed * gameData.value!!.speed * (linesCleared.value!! + 1)
+                gameData.value!!.difficulty.speed * gameData.value!!.difficulty.speed * (linesCleared.value!! + 1)
 
         linesCleared.value = linesCleared.value!! + cleared
 
@@ -114,7 +114,7 @@ class GameViewModel: ViewModel() {
     }
 
     fun create() {
-        gameGrid.value = GameGrid(gameData.value!!.width, gameData.value!!.height)
+        gameGrid.value = GameGrid(gameData.value!!.difficulty.width, gameData.value!!.difficulty.height)
         blockQueue.value = BlockQueue()
         currentBlock.value = blockQueue.value!!.getNext(gameGrid.value!!.width)
         score.value = 0

@@ -63,17 +63,17 @@ class GameActivity : AppCompatActivity() {
         setContentView(binding.root)
         viewModel.gameData.value = intent.getSerializableExtra("data") as GameData
         viewModel.createGameGrid()
-        delay = 1000L / viewModel.gameData.value!!.speed
+        delay = 1000L / viewModel.gameData.value!!.difficulty.speed
         var oldLines = 0
 
         binding.frameWell.post {
             val height = binding.frameWell.height
             val width = binding.frameWell.width
             val size = min(
-                height / viewModel.gameData.value!!.height,
-                width / viewModel.gameData.value!!.width
+                height / viewModel.gameData.value!!.difficulty.height,
+                width / viewModel.gameData.value!!.difficulty.width
             )
-            createTable(viewModel.gameData.value!!.width, viewModel.gameData.value!!.height, size)
+            createTable(viewModel.gameData.value!!.difficulty.width, viewModel.gameData.value!!.difficulty.height, size)
         }
 
         binding.frameNext.post {
@@ -98,7 +98,7 @@ class GameActivity : AppCompatActivity() {
             binding.textScoreValue.text = it.toString()
         }
         viewModel.linesCleared.observe(this) {
-            delay = 1000L / (viewModel.gameData.value!!.speed + sqrt(it.toFloat()).toLong())
+            delay = 1000L / (viewModel.gameData.value!!.difficulty.speed + sqrt(it.toFloat()).toLong())
             binding.textSpeedValue.text = (1000 / delay).toString()
             binding.textClearedValue.text = it.toString()
             when {
@@ -349,7 +349,7 @@ class GameActivity : AppCompatActivity() {
         val record = Record(
             0,
             name,
-            difficulty,
+            difficulty.name,
             score,
             gameTime,
             currentTimeMillis,

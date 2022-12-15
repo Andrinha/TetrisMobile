@@ -13,9 +13,8 @@ import com.fit.tetris.data.shape.Shape
 import com.fit.tetris.databinding.ItemShapeBinding
 import java.util.*
 
-class ShapeAdapter: RecyclerView.Adapter<ShapeAdapter.ShapeHolder>() {
+class ShapeAdapter : RecyclerView.Adapter<ShapeAdapter.ShapeHolder>() {
     private var shapeList = emptyList<Shape>()
-    private lateinit var listener: (Shape) -> Unit
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ShapeHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_shape, parent, false)
@@ -31,21 +30,18 @@ class ShapeAdapter: RecyclerView.Adapter<ShapeAdapter.ShapeHolder>() {
         return shapeList.size
     }
 
-    fun setOnClickListener(listener: (Shape) -> Unit) {
-        this.listener = listener
-    }
-
     @SuppressLint("NotifyDataSetChanged")
     fun setData(shape: List<Shape>) {
         this.shapeList = shape
         notifyDataSetChanged()
     }
 
-    class ShapeHolder(item: View): RecyclerView.ViewHolder(item) {
+    class ShapeHolder(item: View) : RecyclerView.ViewHolder(item) {
         private val binding = ItemShapeBinding.bind(item)
-        fun bind(shape: Shape) = with(binding){
-            val bg = itemView.context.getColor(R.color.color_12_light) //if (shape.selected) itemView.context.getColor(R.color.color_15) else itemView.context.getColor(R.color.color_12_light)
-            val fg = Color.rgb(shape.r, shape.g, shape.b)
+        fun bind(shape: Shape) = with(binding) {
+            val bg =
+                itemView.context.getColor(R.color.color_12_light) //if (shape.selected) itemView.context.getColor(R.color.color_15) else itemView.context.getColor(R.color.color_12_light)
+            val fg = if (shape.isBase) Color.GRAY else Color.rgb(shape.r, shape.g, shape.b)
             var str = shape.tiles.toString(2)
             repeat(16 - str.length) {
                 str = "0$str"
@@ -59,7 +55,13 @@ class ShapeAdapter: RecyclerView.Adapter<ShapeAdapter.ShapeHolder>() {
                 }
             }
             //binding.cardMain.setCardBackgroundColor(if (shape.selected) itemView.context.getColor(R.color.color_15) else itemView.context.getColor(R.color.color_12_light))
-            binding.cardMain.strokeColor = (if (shape.selected) itemView.context.getColor(R.color.color_15) else itemView.context.getColor(R.color.color_12_light))
+            binding.cardMain.strokeColor = if (shape.selected)
+                itemView.context.getColor(R.color.color_15)
+            else itemView.context.getColor(
+                R.color.color_12_light
+            )
+
+
         }
 
         private fun getView(i: Int, j: Int): View {

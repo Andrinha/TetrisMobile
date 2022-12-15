@@ -11,7 +11,8 @@ open class RecyclerItemClickListener(recyclerView: RecyclerView, private val mLi
             return true
         }
 
-        override fun onLongPress(e: MotionEvent) {}
+        override fun onLongPress(e: MotionEvent) {
+        }
     })
 
     interface OnItemClickListener {
