@@ -39,9 +39,6 @@ class EditGameActivity : AppCompatActivity() {
         binding.apply {
             buttonStartGame.setOnClickListener {
                 val name = binding.textName.text.toString()
-                val width = binding.textWidth.text.toString()
-                val height = binding.textHeight.text.toString()
-                val speed = binding.textSpeed.text.toString()
                 var success = true
                 val difficulty = binding.textDifficulty.text.toString()
                 val type = if (binding.radioScore.isChecked) 0 else 1
@@ -50,19 +47,6 @@ class EditGameActivity : AppCompatActivity() {
                     binding.textInputName.error = getString(R.string.enter_player_name)
                     success = false
                 } else binding.textInputName.error = null
-                if (width.isBlank() || width.toInt() !in 8..25) {
-                    binding.textInputWidth.error = getString(R.string.width_range)
-                    success = false
-                } else binding.textInputWidth.error = null
-                if (height.isBlank() || height.toInt() !in 10..35) {
-                    binding.textInputHeight.error = getString(R.string.height_range)
-                    success = false
-                } else binding.textInputHeight.error = null
-                if (speed.isBlank() || speed.toInt() !in 1..60) {
-                    binding.textInputSpeed.error = getString(R.string.speed_range)
-                    success = false
-                } else binding.textInputSpeed.error = null
-
 
                 if (success) {
                     val intent = Intent(this@EditGameActivity, GameActivity::class.java)
@@ -113,8 +97,8 @@ class EditGameActivity : AppCompatActivity() {
                 if (!difficultyData.value.isNullOrEmpty()) {
                     val find = difficultyData.value!!.find { it.name == difficulty }
                     if (find != null) {
-                        binding.textWidth.setText(find.width.toString())
-                        binding.textHeight.setText(find.height.toString())
+//                        binding.textWidth.setText(find.width.toString())
+//                        binding.textHeight.setText(find.height.toString())
                         //binding.textName.setText(find.name)
 
                         val newSelected: MutableList<Boolean> = selected.value!!.toMutableList()

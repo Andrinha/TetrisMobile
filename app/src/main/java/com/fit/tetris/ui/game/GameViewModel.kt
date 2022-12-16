@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import com.fit.tetris.data.Block
 import com.fit.tetris.data.GameData
 import com.fit.tetris.data.Position
+import com.fit.tetris.utils.BaseShapes
 import kotlin.math.min
 
 class GameViewModel: ViewModel() {
@@ -115,7 +116,7 @@ class GameViewModel: ViewModel() {
 
     fun create() {
         gameGrid.value = GameGrid(gameData.value!!.difficulty.width, gameData.value!!.difficulty.height)
-        blockQueue.value = BlockQueue()
+        blockQueue.value = BlockQueue(gameData.value!!.difficulty.shapes + BaseShapes().list)
         currentBlock.value = blockQueue.value!!.getNext(gameGrid.value!!.width)
         score.value = 0
         linesCleared.value = 0

@@ -23,3 +23,15 @@ fun Long.toDateTime(): String {
 fun Long.toTimeFormat(): String {
     return SimpleDateFormat("mm:ss", Locale.getDefault()).format(Date(this)).toString()
 }
+
+fun Int.toBooleanArray(): Array<BooleanArray> {
+    val string = this.toString(2).padStart(16, '0')
+    var i = -1
+    val array = Array(4) {
+        BooleanArray(4) {
+            i++
+            string[i] == '1'
+        }
+    }
+    return array
+}

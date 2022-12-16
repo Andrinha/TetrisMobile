@@ -1,6 +1,7 @@
 package com.fit.tetris.ui.admin
 
 import android.content.Intent
+import android.graphics.Paint
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
@@ -44,14 +45,20 @@ class AdminActivity : AppCompatActivity() {
                 insertDataToDatabase()
                 this@AdminActivity.finish()
             }
-//            recyclerShapes.onItemClick {
-//                val data = viewModel.selected.value!!.toMutableList()
-//                data[it] = !data[it]
-//                viewModel.selected.value = data
-//            }
-//            recyclerShapes.onLongItemClick {
-//                BottomSheetPickPhotoFragment().show(supportFragmentManager, "tag")
-//            }
+            buttonSelectall.paintFlags = buttonSelectall.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+            buttonSelectall.setOnClickListener {
+                val data = viewModel.selected.value!!.toMutableList()
+                if (viewModel.selected.value!!.all { it })
+                    viewModel.selected.value!!.forEachIndexed { i, _ ->
+                        data[i] = false
+                    }
+                else
+                    data.forEachIndexed { i, _ ->
+                        data[i] = true
+                    }
+                viewModel.selected.value = data
+            }
+
             recyclerShapes.setOnItemClickListener(
                 {
                     if (it < viewModel.shapesData.value!!.size) {
