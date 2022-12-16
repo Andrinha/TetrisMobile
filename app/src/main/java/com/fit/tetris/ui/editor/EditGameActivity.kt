@@ -126,6 +126,9 @@ class EditGameActivity : AppCompatActivity() {
                 }
                 val adapter = ArrayAdapter(this@EditGameActivity, R.layout.item_list, data)
                 (binding.textInputDifficulty.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+
+                viewModel.selectedDifficulty.value = difficulties.last().name
+                binding.textDifficulty.setText(difficulties.last().name, false)
             }
         }
     }
