@@ -6,7 +6,6 @@ import android.view.MotionEvent
 import android.view.View
 import android.widget.TableLayout
 import android.widget.TableRow
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.forEach
@@ -14,6 +13,7 @@ import androidx.core.view.get
 import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 import com.fit.tetris.R
+import com.fit.tetris.data.Action
 import com.fit.tetris.data.shape.Shape
 import com.fit.tetris.data.shape.ShapeDatabase
 import com.fit.tetris.databinding.ActivityBlockEditorBinding
@@ -73,32 +73,41 @@ class BlockEditorActivity : AppCompatActivity() {
             }
             binding.textValue.text = "Значение: ${intTiles.toInt(2)}"
 
-            var isShapeGood = 0
+            var isShapeGood = true
 
             if (checkShapeForConnection(tiles)) {
                 binding.textIsConnected.text = "Фигура связная"
                 binding.textIsConnected.setTextColor(ContextCompat.getColor(this, R.color.color_15))
-                isShapeGood++
             } else {
                 binding.textIsConnected.text = "Фигура должна быть связной"
                 binding.textIsConnected.setTextColor(ContextCompat.getColor(this, R.color.color_10))
+                isShapeGood = false
             }
-
-            if (checkForDuplicate(
-                    tiles,
-                    viewModel.shapesData.value?.map { it.tiles.toBooleanArray() })
-            ) {
+            if (checkForDuplicate(tiles, viewModel.shapes)) {
                 binding.textIsStored.text = "Фигура новая"
-                binding.textIsStored.setTextColor(ContextCompat.getColor(this, R.color.color_15))
-                isShapeGood++
+                binding.textIsStored.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.color_15
+                    )
+                )
             } else {
                 binding.textIsStored.text = "Фигура уже существует"
-                binding.textIsStored.setTextColor(ContextCompat.getColor(this, R.color.color_10))
+                binding.textIsStored.setTextColor(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.color_10
+                    )
+                )
+                isShapeGood = false
             }
 
-            binding.buttonSave.isEnabled = isShapeGood == 2
+            binding.buttonSave.isEnabled = isShapeGood
         }
 
+        viewModel.shapesData.observe(this) { shapes ->
+            viewModel.shapes = shapes.map { it.tiles.toBooleanArray() }.toMutableList()
+        }
     }
 
     private fun checkShapeForConnection(tiles: Array<BooleanArray>): Boolean {
@@ -115,14 +124,44 @@ class BlockEditorActivity : AppCompatActivity() {
 
     private fun checkForDuplicate(
         tiles: Array<BooleanArray>,
-        list: List<Array<BooleanArray>>?
+        shapeList: List<Array<BooleanArray>>?
     ): Boolean {
-        if (list.isNullOrEmpty())
+        if (shapeList.isNullOrEmpty())
             return true
-        if (list.contains(tiles))
-            return false
 
+        shapeList.forEach { shape ->
+            var contains = true
+            repeat(4) { j ->
+                repeat(4) { i ->
+                    if (shape[i][j] != tiles[i][j]) {
+                        contains = false
+                    }
+                }
+            }
+            if (contains) {
+                return false
+            }
+        }
         return true
+    }
+
+    private fun move(tiles: Array<BooleanArray>, action: Action) {
+        val temp = tiles.clone()
+        when (action) {
+            Action.LEFT -> {
+                repeat(3) {
+                    temp[it] = tiles[it + 1]
+                }
+            }
+            Action.RIGHT -> {
+                repeat(3) {
+                    temp[it] = tiles[it - 1]
+                }
+            }
+            else -> {
+
+            }
+        }
     }
 
     private fun countNeighbors(tiles: Array<BooleanArray>, i: Int, j: Int): Int {

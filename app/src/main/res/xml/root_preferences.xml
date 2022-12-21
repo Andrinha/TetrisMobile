@@ -1,21 +1,23 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory app:title="@string/sounds_header">
 
         <SeekBarPreference
-            app:title="@string/music_volume"
             android:max="100"
-            app:min="0"
             app:defaultValue="100"
-            app:icon="@drawable/ic_round_volume_up_24" />
+            app:icon="@drawable/ic_round_volume_up_24"
+            app:key="music"
+            app:min="0"
+            app:title="@string/music_volume" />
 
         <SeekBarPreference
-            app:title="@string/sounds_volume"
             android:max="100"
-            app:min="0"
             app:defaultValue="100"
-            app:icon="@drawable/ic_round_volume_up_24" />
+            app:icon="@drawable/ic_round_volume_up_24"
+            app:key="sounds"
+            app:min="0"
+            app:title="@string/sounds_volume" />
 
     </PreferenceCategory>
 

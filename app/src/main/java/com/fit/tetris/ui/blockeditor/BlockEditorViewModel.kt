@@ -16,6 +16,7 @@ class BlockEditorViewModel(application: Application) : AndroidViewModel(applicat
         tiles.value = t
     }
 
+    var shapes: MutableList<Array<BooleanArray>> = mutableListOf()
     var tiles: MutableLiveData<Array<BooleanArray>> = MutableLiveData(Array(4) { BooleanArray(4) })
 
     private val shapeDao = ShapeDatabase.getDatabase(application).shapeDao()

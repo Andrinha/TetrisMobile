@@ -40,7 +40,6 @@ class EditGameActivity : AppCompatActivity() {
             buttonStartGame.setOnClickListener {
                 val name = binding.textName.text.toString()
                 var success = true
-                val difficulty = binding.textDifficulty.text.toString()
                 val type = if (binding.radioScore.isChecked) 0 else 1
 
                 if (name.isBlank()) {
@@ -116,19 +115,29 @@ class EditGameActivity : AppCompatActivity() {
                     selected.forEachIndexed { i, isSelected ->
                         data[i].selected = isSelected
                     }
-                    adapter.setData(data.filter { it.selected } + BaseShapes().list.map { Shape(0, it, isBase = true) })
+                    adapter.setData(data.filter { it.selected } + BaseShapes().list.map {
+                        Shape(
+                            0,
+                            it,
+                            isBase = true
+                        )
+                    })
                 }
             }
             difficultyData.observe(this@EditGameActivity) { difficulties ->
-                val data: MutableList<String> = mutableListOf()
-                difficulties.forEach {
-                    data.add(it.name)
-                }
-                val adapter = ArrayAdapter(this@EditGameActivity, R.layout.item_list, data)
-                (binding.textInputDifficulty.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+                if (difficulties.isNotEmpty()) {
+                    val data: MutableList<String> = mutableListOf()
+                    difficulties.forEach {
+                        data.add(it.name)
+                    }
+                    val adapter = ArrayAdapter(this@EditGameActivity, R.layout.item_list, data)
+                    (binding.textInputDifficulty.editText as? AutoCompleteTextView)?.setAdapter(
+                        adapter
+                    )
 
-                viewModel.selectedDifficulty.value = difficulties.last().name
-                binding.textDifficulty.setText(difficulties.last().name, false)
+                    viewModel.selectedDifficulty.value = difficulties.last().name
+                    binding.textDifficulty.setText(difficulties.last().name, false)
+                }
             }
         }
     }

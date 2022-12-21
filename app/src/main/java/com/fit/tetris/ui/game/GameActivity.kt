@@ -3,6 +3,7 @@ package com.fit.tetris.ui.game
 import android.content.res.AssetFileDescriptor
 import android.content.res.AssetManager
 import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.media.SoundPool
@@ -17,6 +18,7 @@ import android.widget.TableRow
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import androidx.lifecycle.ViewModelProvider
+import androidx.preference.PreferenceManager
 import androidx.room.Room
 import com.fit.tetris.R
 import com.fit.tetris.data.Action
@@ -28,6 +30,7 @@ import com.fit.tetris.databinding.ActivityGameBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import java.io.IOException
 import java.lang.Integer.min
+import kotlin.math.ln
 import kotlin.math.sqrt
 
 
@@ -42,12 +45,18 @@ class GameActivity : AppCompatActivity() {
     private val mediaPlayer: MediaPlayer by lazy {
         MediaPlayer.create(this, R.raw.anime).apply { isLooping = true }
     }
+    private val preferences by lazy {
+        PreferenceManager.getDefaultSharedPreferences(this)
+    }
     private lateinit var soundPool: SoundPool
     private lateinit var assetManager: AssetManager
     private var streamID = 0
     private var soundNormal = 0
     private var soundFinish = 0
     private var soundWhistle = 0
+    private var soundVolume = 0f
+    private var musicVolume = 0f
+    private var stroke = false
 
     private val handler = Handler(Looper.getMainLooper())
     private lateinit var runnable: Runnable
@@ -65,6 +74,12 @@ class GameActivity : AppCompatActivity() {
         viewModel.createGameGrid()
         delay = 1000L / viewModel.gameData.value!!.difficulty.speed
         var oldLines = 0
+        musicVolume = preferences.getInt("music", 0) / 100f
+        soundVolume = preferences.getInt("sounds", 0) / 100f
+        stroke = preferences.getBoolean("stroke", false)
+
+        val log1 = (ln(100.0 - musicVolume) / ln(100.0)).toFloat()
+        mediaPlayer.setVolume(musicVolume, musicVolume)
 
         binding.frameWell.post {
             val height = binding.frameWell.height
@@ -73,7 +88,11 @@ class GameActivity : AppCompatActivity() {
                 height / viewModel.gameData.value!!.difficulty.height,
                 width / viewModel.gameData.value!!.difficulty.width
             )
-            createTable(viewModel.gameData.value!!.difficulty.width, viewModel.gameData.value!!.difficulty.height, size)
+            createTable(
+                viewModel.gameData.value!!.difficulty.width,
+                viewModel.gameData.value!!.difficulty.height,
+                size
+            )
         }
 
         binding.frameNext.post {
@@ -98,7 +117,8 @@ class GameActivity : AppCompatActivity() {
             binding.textScoreValue.text = it.toString()
         }
         viewModel.linesCleared.observe(this) {
-            delay = 1000L / (viewModel.gameData.value!!.difficulty.speed + sqrt(it.toFloat()).toLong())
+            delay =
+                1000L / (viewModel.gameData.value!!.difficulty.speed + sqrt(it.toFloat()).toLong())
             binding.textSpeedValue.text = (1000 / delay).toString()
             binding.textClearedValue.text = it.toString()
             when {
@@ -144,9 +164,10 @@ class GameActivity : AppCompatActivity() {
             }
             repeat(width) {
                 val cell = View(this).apply {
-                    //setBackgroundResource(R.drawable.cell_background)
-                    setBackgroundColor(Color.BLACK)
-                    //layoutParams = TableRow.LayoutParams(ceil(20.toPx).toInt(), ceil(20.toPx).toInt())
+                    if (stroke)
+                        background = shape(Color.BLACK, Color.GRAY)
+                    else
+                        setBackgroundColor(Color.BLACK)
                     layoutParams = TableRow.LayoutParams(size, size)
                 }
                 tableRow.addView(cell)
@@ -154,6 +175,12 @@ class GameActivity : AppCompatActivity() {
             tableLayout.addView(tableRow)
         }
         binding.frameWell.addView(tableLayout)
+    }
+
+    fun shape(background: Int, stroke: Int) = GradientDrawable().apply {
+        shape = GradientDrawable.RECTANGLE
+        setColor(background)
+        setStroke(1, stroke)
     }
 
     private fun createTable(width: Int, block: Block) {
@@ -201,6 +228,7 @@ class GameActivity : AppCompatActivity() {
             for (x in 0 until grid.width) {
                 if (grid[x, y] != 0) {
                     getView(x, y).setBackgroundColor(grid[x, y])
+                    //getView(x, y).background = shape(grid[x, y], Color.GRAY)
                 }
             }
         }
@@ -230,7 +258,10 @@ class GameActivity : AppCompatActivity() {
 //                        //setBackgroundResource(R.drawable.cell_background)
 //                        setBackgroundColor(Color.BLACK)
 //                    }
-                getView(x, y).setBackgroundColor(Color.BLACK)
+                if (stroke)
+                    getView(x, y).background = shape(Color.BLACK, Color.GRAY)
+                else
+                    getView(x, y).setBackgroundColor(Color.BLACK)
             }
         }
     }
@@ -259,7 +290,7 @@ class GameActivity : AppCompatActivity() {
 
     private fun playSound(sound: Int): Int {
         if (sound > 0) {
-            streamID = soundPool.play(sound, 1F, 1F, 1, 0, 1F)
+            streamID = soundPool.play(sound, soundVolume, soundVolume, 1, 0, 1F)
         }
         return streamID
     }
