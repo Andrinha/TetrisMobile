@@ -14,4 +14,7 @@ interface ShapeDao {
 
     @Query("SELECT * FROM shape_table")
     fun readAllData(): LiveData<List<Shape>>
+
+    @Query("DELETE FROM shape_table WHERE shapeId = :id")
+    fun deleteItem(id: Int)
 }

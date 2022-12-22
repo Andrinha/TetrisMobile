@@ -69,7 +69,11 @@ class AdminActivity : AppCompatActivity() {
                 },
                 {
                     if (it < viewModel.shapesData.value!!.size) {
-                        BottomSheetPickPhotoFragment().show(supportFragmentManager, "tag")
+                        val bottomSheetFragment = BottomSheetPickPhotoFragment()
+                        val bundle = Bundle()
+                        bundle.putInt("position", it)
+                        bottomSheetFragment.arguments = bundle
+                        bottomSheetFragment.show(supportFragmentManager, "tag")
                     }
                 }
             )

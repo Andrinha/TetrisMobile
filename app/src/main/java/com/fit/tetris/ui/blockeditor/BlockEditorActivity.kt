@@ -36,6 +36,12 @@ class BlockEditorActivity : AppCompatActivity() {
         _binding = ActivityBlockEditorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val extras = intent.extras?.getInt("shape")
+        if (extras != null) {
+            viewModel.tiles.value = extras.toBooleanArray()
+        }
+
+
         var a = 0
         var b = 0
         var c = 0
