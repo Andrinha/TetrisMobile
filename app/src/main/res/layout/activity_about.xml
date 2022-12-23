@@ -29,10 +29,22 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
-                android:text="@string/large_text" />
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="@string/devs_info"
+                android:textSize="16sp" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/image_pochita"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:adjustViewBounds="true"
+                app:shapeAppearance="@style/circleImageView8dp"
+                android:scaleType="fitStart" />
 
         </LinearLayout>
     </ScrollView>
