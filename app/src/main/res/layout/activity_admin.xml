@@ -39,8 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp">
+        android:layout_marginEnd="20dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/text_name"
@@ -48,13 +47,26 @@
             android:layout_height="match_parent"
             android:hint="@string/difficulty_name"
             android:inputType="text"
-            android:singleLine="true"/>
+            android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_delete"
+        style="@style/button_text_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginEnd="20dp"
+        android:gravity="end|center_vertical"
+        android:text="Удалить сложность"
+        android:textColor="@color/color_10"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:orientation="horizontal">
@@ -122,10 +134,10 @@
         style="@style/button_text_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="end|center_vertical"
         android:layout_gravity="end"
-        android:layout_marginEnd="20dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="end|center_vertical"
         android:text="Выбрать все" />
 
     <androidx.recyclerview.widget.RecyclerView

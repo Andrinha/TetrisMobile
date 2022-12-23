@@ -1,8 +1,10 @@
 package com.fit.tetris.ui.admin
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Paint
 import android.os.Bundle
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +20,7 @@ import com.fit.tetris.databinding.ActivityAdminBinding
 import com.fit.tetris.ui.blockeditor.BlockEditorActivity
 import com.fit.tetris.utils.BaseShapes
 import com.fit.tetris.utils.setOnItemClickListener
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textview.MaterialTextView
 import java.util.*
 
@@ -41,15 +44,19 @@ class AdminActivity : AppCompatActivity() {
                 val intent = Intent(this@AdminActivity, BlockEditorActivity::class.java)
                 startActivity(intent)
             }
-            buttonSave.setOnClickListener {
+            buttonSave.setOnClickListener { view ->
                 var success = true
                 val name = binding.textName.text.toString()
                 val width = binding.textWidth.text.toString().toInt()
                 val height = binding.textHeight.text.toString().toInt()
                 val speed = binding.textSpeed.text.toString().toInt()
 
+                val find = viewModel.difficultyData.value!!.find { it.name == binding.textName.text.toString()}
                 if (name.isBlank()) {
                     binding.textInputName.error = getString(R.string.enter_diff_name)
+                    success = false
+                } else if (find != null)  {
+                    binding.textInputName.error = "Уровень с таким названием уже есть"
                     success = false
                 } else binding.textInputName.error = null
                 if (width !in 8..25) {
@@ -65,10 +72,16 @@ class AdminActivity : AppCompatActivity() {
                     success = false
                 } else binding.textInputSpeed.error = null
 
+
+
                 if (success) {
                     insertDataToDatabase()
                     this@AdminActivity.finish()
                 }
+            }
+            buttonDelete.paintFlags = buttonSelectall.paintFlags or Paint.UNDERLINE_TEXT_FLAG
+            buttonDelete.setOnClickListener {
+                showDeleteDialog(viewModel.selectedDifficulty.value!!)
             }
             buttonSelectall.paintFlags = buttonSelectall.paintFlags or Paint.UNDERLINE_TEXT_FLAG
             buttonSelectall.setOnClickListener {
@@ -165,7 +178,10 @@ class AdminActivity : AppCompatActivity() {
                             newSelected[i] = find.shapes.contains(shape.tiles)
                         }
                         viewModel.selected.value = newSelected
+                        binding.buttonDelete.visibility = View.VISIBLE
                     }
+                    else
+                        binding.buttonDelete.visibility = View.GONE
                 }
             }
         }
@@ -200,8 +216,32 @@ class AdminActivity : AppCompatActivity() {
             DifficultyDatabase::class.java, "difficulty_table"
         ).allowMainThreadQueries().build()
 
-        val recordDao = db.difficultyDao()
-        recordDao.addRecord(difficulty)
+        val dao = db.difficultyDao()
+        dao.addRecord(difficulty)
+    }
+
+    private fun deleteDifficulty(name: String) {
+        val db = Room.databaseBuilder(
+            this,
+            DifficultyDatabase::class.java, "difficulty_table"
+        ).allowMainThreadQueries().build()
+
+        val dao = db.difficultyDao()
+        dao.deleteItem(name)
+    }
+
+    private fun showDeleteDialog(name: String) {
+        MaterialAlertDialogBuilder(this)
+            .setTitle("Подтвердите удаление")
+            .setMessage("Вы действительно хотите удалить уровень сложности \"$name\"?")
+            .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setPositiveButton(resources.getString(R.string.delete)) { dialog, _ ->
+                deleteDifficulty(name)
+                dialog.dismiss()
+            }
+            .show()
     }
 
     override fun onDestroy() {

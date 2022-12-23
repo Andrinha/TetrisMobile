@@ -34,8 +34,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
                 android:gravity="center"
-                android:text="Программа разработана\nОбучающимися группы 6414-020302D\n
-Калачевом И. А. и Воронковой А. С."
+                android:text="@string/devs_info"
                 android:textSize="16sp" />
 
             <com.google.android.material.imageview.ShapeableImageView

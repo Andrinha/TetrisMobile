@@ -29,8 +29,8 @@ class BlockEditorActivity : AppCompatActivity() {
 
     private var _viewModel: BlockEditorViewModel? = null
     private val viewModel get() = _viewModel!!
-    val bundleTiles = intent.extras?.getInt("tiles")
-    val bundleId = intent.extras?.getInt("id")
+//    private val bundleTiles = intent.extras?.getInt("tiles")
+//    private val bundleId = intent.extras?.getInt("id")
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,8 +39,8 @@ class BlockEditorActivity : AppCompatActivity() {
         _binding = ActivityBlockEditorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (bundleTiles != null) {
-            viewModel.tiles.value = bundleTiles.toBooleanArray()
+        if (intent.extras != null) {
+            viewModel.tiles.value = intent.extras?.getInt("tiles")?.toBooleanArray()
         }
 
         var a = 0
@@ -218,7 +218,7 @@ class BlockEditorActivity : AppCompatActivity() {
                     repeat(4 - size + 1) { i ->
 
                         repeat(size) { y ->
-                            repeat( size) { x ->
+                            repeat(size) { x ->
                                 tiles[x][y] = _tiles[x + i][y + j]
                             }
                         }
@@ -231,7 +231,7 @@ class BlockEditorActivity : AppCompatActivity() {
                     }
                 }
                 repeat(size) { y ->
-                    repeat( size) { x ->
+                    repeat(size) { x ->
                         tiles[x][y] = _tiles[x + offsetI][y + offsetJ]
                     }
                 }
@@ -316,8 +316,8 @@ class BlockEditorActivity : AppCompatActivity() {
             }
         }
         var id = 0
-        if (bundleId != null) {
-            id = bundleId
+        if (intent.extras != null) {
+            id = intent.extras?.getInt("id")!!
         }
         val record = Shape(
             id,
