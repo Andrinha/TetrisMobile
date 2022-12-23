@@ -9,7 +9,7 @@ import androidx.room.Query
 @Dao
 interface ShapeDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addShape(shape: Shape)
 
     @Query("SELECT * FROM shape_table")

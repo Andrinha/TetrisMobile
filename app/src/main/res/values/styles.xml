@@ -38,4 +38,9 @@
 
     <style name="button_text_style" parent="Widget.MaterialComponents.Button.TextButton">
     </style>
+
+    <style name="circleImageView8dp" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
 </resources>

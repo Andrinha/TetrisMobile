@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.fit.tetris.databinding.ActivityMainBinding
 import com.fit.tetris.ui.about.AboutActivity
+import com.fit.tetris.ui.devs.DevsActivity
 import com.fit.tetris.ui.editor.EditGameActivity
 import com.fit.tetris.ui.settings.SettingsActivity
 import com.fit.tetris.ui.statistics.StatisticsActivity
@@ -42,7 +43,7 @@ class MainActivity : AppCompatActivity() {
             }
             textDevs.paintFlags = textAbout.paintFlags or Paint.UNDERLINE_TEXT_FLAG
             textDevs.setOnClickListener {
-                val intent = Intent(this@MainActivity, AboutActivity::class.java)
+                val intent = Intent(this@MainActivity, DevsActivity::class.java)
                 startActivity(intent)
             }
         }

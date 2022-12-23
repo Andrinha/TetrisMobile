@@ -29,6 +29,9 @@ class BlockEditorActivity : AppCompatActivity() {
 
     private var _viewModel: BlockEditorViewModel? = null
     private val viewModel get() = _viewModel!!
+    val bundleTiles = intent.extras?.getInt("tiles")
+    val bundleId = intent.extras?.getInt("id")
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,11 +39,9 @@ class BlockEditorActivity : AppCompatActivity() {
         _binding = ActivityBlockEditorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val extras = intent.extras?.getInt("shape")
-        if (extras != null) {
-            viewModel.tiles.value = extras.toBooleanArray()
+        if (bundleTiles != null) {
+            viewModel.tiles.value = bundleTiles.toBooleanArray()
         }
-
 
         var a = 0
         var b = 0
@@ -314,8 +315,12 @@ class BlockEditorActivity : AppCompatActivity() {
                 tiles += (if (viewModel.tiles.value!![i][j]) "1" else "0")
             }
         }
+        var id = 0
+        if (bundleId != null) {
+            id = bundleId
+        }
         val record = Shape(
-            0,
+            id,
             tiles.toInt(2)
         )
         addShape(record)

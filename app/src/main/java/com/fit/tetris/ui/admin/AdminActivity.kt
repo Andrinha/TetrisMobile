@@ -42,8 +42,33 @@ class AdminActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             buttonSave.setOnClickListener {
-                insertDataToDatabase()
-                this@AdminActivity.finish()
+                var success = true
+                val name = binding.textName.text.toString()
+                val width = binding.textWidth.text.toString().toInt()
+                val height = binding.textHeight.text.toString().toInt()
+                val speed = binding.textSpeed.text.toString().toInt()
+
+                if (name.isBlank()) {
+                    binding.textInputName.error = getString(R.string.enter_diff_name)
+                    success = false
+                } else binding.textInputName.error = null
+                if (width !in 8..25) {
+                    binding.textInputWidth.error = getString(R.string.width_range)
+                    success = false
+                } else binding.textInputWidth.error = null
+                if (height !in 10..35) {
+                    binding.textInputHeight.error = getString(R.string.height_range)
+                    success = false
+                } else binding.textInputHeight.error = null
+                if (speed !in 1..60) {
+                    binding.textInputSpeed.error = getString(R.string.speed_range)
+                    success = false
+                } else binding.textInputSpeed.error = null
+
+                if (success) {
+                    insertDataToDatabase()
+                    this@AdminActivity.finish()
+                }
             }
             buttonSelectall.paintFlags = buttonSelectall.paintFlags or Paint.UNDERLINE_TEXT_FLAG
             buttonSelectall.setOnClickListener {

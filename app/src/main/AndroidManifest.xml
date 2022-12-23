@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.fit.tetris" >
+    package="com.fit.tetris">
 
     <application
         android:allowBackup="true"
@@ -12,11 +12,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Tetris.NoActionBar"
-        tools:targetApi="31" >
+        tools:targetApi="31">
+        <activity
+            android:name=".ui.devs.DevsActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".ui.settings.SettingsActivity"
             android:exported="false"
-            android:label="@string/title_activity_settings" >
+            android:label="@string/title_activity_settings">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -24,7 +31,7 @@
         <activity
             android:name=".ui.statistics.StatisticsActivity"
             android:exported="false"
-            android:label="@string/title_activity_statistics" >
+            android:label="@string/title_activity_statistics">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -33,22 +40,22 @@
             android:name=".ui.about.AboutActivity"
             android:exported="false"
             android:label="@string/title_activity_about"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".ui.blockeditor.BlockEditorActivity"
-            android:exported="false" >
+            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".ui.admin.AdminActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:exported="false" >
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -60,10 +67,10 @@
             android:name=".ui.editor.EditGameActivity"
             android:exported="false"
             android:label="@string/title_activity_edit_game"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".MainActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

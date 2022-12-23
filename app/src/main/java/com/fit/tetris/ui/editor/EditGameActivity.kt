@@ -6,6 +6,7 @@ import android.text.InputType
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.fit.tetris.R
@@ -18,6 +19,9 @@ import com.fit.tetris.ui.game.GameActivity
 import com.fit.tetris.utils.BaseShapes
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
+import com.google.android.material.textfield.TextInputLayout.END_ICON_PASSWORD_TOGGLE
+import com.google.android.material.textfield.TextInputLayout.EndIconMode
 import com.google.android.material.textview.MaterialTextView
 import java.util.*
 
@@ -61,9 +65,9 @@ class EditGameActivity : AppCompatActivity() {
                 }
             }
             buttonLogin.setOnClickListener {
-                //showAlertWithTextInput()
-                val intent = Intent(this@EditGameActivity, AdminActivity::class.java)
-                startActivity(intent)
+                showAlertWithTextInput()
+//                val intent = Intent(this@EditGameActivity, AdminActivity::class.java)
+//                startActivity(intent)
             }
 
             toolbar.setNavigationOnClickListener {
@@ -153,12 +157,17 @@ class EditGameActivity : AppCompatActivity() {
     }
 
     private fun showAlertWithTextInput() {
-        val input = TextInputEditText(this)
-        input.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
 
+        val input = TextInputEditText(this).apply {
+            inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
+        }
+        val layout = TextInputLayout(this).apply {
+            addView(input)
+            endIconMode = END_ICON_PASSWORD_TOGGLE
+        }
         MaterialAlertDialogBuilder(this)
             .setTitle(resources.getString(R.string.enter_password))
-            .setView(input)
+            .setView(layout)
             .setPositiveButton(resources.getString(R.string.ok)) { _, _ ->
                 if (viewModel.password == input.text.toString()) {
                     val intent = Intent(this, AdminActivity::class.java)

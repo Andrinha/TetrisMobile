@@ -48,8 +48,7 @@
             android:layout_height="match_parent"
             android:hint="@string/difficulty_name"
             android:inputType="text"
-            android:singleLine="true"
-            android:text="Normal" />
+            android:singleLine="true"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <LinearLayout
@@ -113,7 +112,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/difficulty_speed"
-            android:inputType="text"
+            android:inputType="number"
             android:singleLine="true"
             android:text="1" />
     </com.google.android.material.textfield.TextInputLayout>

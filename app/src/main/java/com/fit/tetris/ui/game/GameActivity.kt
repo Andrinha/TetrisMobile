@@ -77,8 +77,6 @@ class GameActivity : AppCompatActivity() {
         musicVolume = preferences.getInt("music", 0) / 100f
         soundVolume = preferences.getInt("sounds", 0) / 100f
         stroke = preferences.getBoolean("stroke", false)
-
-        val log1 = (ln(100.0 - musicVolume) / ln(100.0)).toFloat()
         mediaPlayer.setVolume(musicVolume, musicVolume)
 
         binding.frameWell.post {
