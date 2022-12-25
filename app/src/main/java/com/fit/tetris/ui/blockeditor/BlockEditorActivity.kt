@@ -74,13 +74,6 @@ class BlockEditorActivity : AppCompatActivity() {
                     )
                 }
             }
-            var intTiles = ""
-            repeat(4) { j ->
-                repeat(4) { i ->
-                    intTiles += (if (tiles[i][j]) "1" else "0")
-                }
-            }
-            binding.textValue.text = "Значение: ${intTiles.toInt(2)}"
 
             var isShapeGood = true
 
@@ -110,7 +103,6 @@ class BlockEditorActivity : AppCompatActivity() {
                 )
                 isShapeGood = false
             }
-            binding.textValue.text = count(tiles).toString()
             binding.buttonSave.isEnabled = isShapeGood
 
         }

@@ -6,7 +6,6 @@ import android.text.InputType
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.fit.tetris.R
@@ -21,7 +20,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.android.material.textfield.TextInputLayout.END_ICON_PASSWORD_TOGGLE
-import com.google.android.material.textfield.TextInputLayout.EndIconMode
 import com.google.android.material.textview.MaterialTextView
 import java.util.*
 
@@ -43,6 +41,7 @@ class EditGameActivity : AppCompatActivity() {
         binding.apply {
             buttonStartGame.setOnClickListener {
                 val name = binding.textName.text.toString()
+                val difficulty = binding.textDifficulty.text.toString()
                 var success = true
                 val type = if (binding.radioScore.isChecked) 0 else 1
 
@@ -50,6 +49,11 @@ class EditGameActivity : AppCompatActivity() {
                     binding.textInputName.error = getString(R.string.enter_player_name)
                     success = false
                 } else binding.textInputName.error = null
+
+                if (difficulty.isBlank()) {
+                    binding.textInputDifficulty.error = "Укажите или создайте сложность"
+                    success = false
+                } else binding.textInputDifficulty.error = null
 
                 if (success) {
                     val intent = Intent(this@EditGameActivity, GameActivity::class.java)

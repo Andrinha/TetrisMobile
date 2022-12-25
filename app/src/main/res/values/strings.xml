@@ -1,4 +1,5 @@
-<resources translatable="false">
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation">
     <string name="app_name">Tetris</string>
     <string name="start">Start</string>
     <string name="statistics">Statistics</string>
@@ -30,7 +31,6 @@
     <string name="difficulty">Difficulty</string>
     <string name="about">About</string>
     <string name="title_activity_about">About</string>
-    <string name="large_text">test</string>
     <string name="next">Next</string>
     <string name="easy">Easy</string>
     <string name="hard">Hard</string>
@@ -54,7 +54,6 @@
     <string name="stroke_title">Divide well elements</string>
     <string name="stroke_summary_on">"Show grid"</string>
     <string name="stroke_summary_off">Do not show grid</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="developers">Developers</string>
     <string name="music_volume">Music volume</string>
@@ -66,9 +65,11 @@
     <string name="difficulty_name">Название сложности</string>
     <string name="difficulty_speed">Скорость</string>
     <string name="editor">Редактор сложностей</string>
-    <string name="bottom_sheet_option_heading">bottom_sheet_option_heading</string>
+    <string name="bottom_sheet_option_heading" >bottom_sheet_option_heading</string>
     <string name="delete">Удалить</string>
     <string name="enter_diff_name">Введите название сложности</string>
     <string name="devs">Информация о разработчиках</string>
     <string name="devs_info">Программа разработана\nОбучающимися группы 6414–020302D\n Калачевом И. А. и Воронковой А. С.</string>
+
+
 </resources>

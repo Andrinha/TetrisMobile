@@ -19,8 +19,10 @@ class AboutActivity : AppCompatActivity() {
             this.finish()
         }
 
-        Glide.with(this)
-            .load(R.drawable.makima_power)
-            .into(binding.imagePochita)
+        binding.webView.loadUrl("file:///android_asset/help.html");
+
+//        Glide.with(this)
+//            .load(R.drawable.makima_power)
+//            .into(binding.imagePochita)
     }
 }
